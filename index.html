@@ -16,58 +16,69 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f5f7fa;
             min-height: 100vh;
             padding: 1rem;
             color: #333;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
         .header {
-            background: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 2rem 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-bottom: 2rem;
             text-align: center;
+            color: white;
         }
         
         .header h1 {
-            color: #667eea;
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin-bottom: 0.5rem;
+            font-weight: 700;
         }
         
         .header p {
-            color: #666;
             font-size: 0.95rem;
+            opacity: 0.95;
+        }
+        
+        .sync-status {
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 6px;
+            display: inline-block;
         }
         
         .nav-tabs {
             display: flex;
             gap: 0.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             overflow-x: auto;
             background: white;
             padding: 1rem;
             border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         
         .nav-tabs button {
-            padding: 0.6rem 1.2rem;
+            padding: 0.7rem 1.4rem;
             border: 2px solid #ddd;
             background: white;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.95rem;
+            font-weight: 600;
             white-space: nowrap;
             transition: all 0.3s;
-            font-weight: 500;
+            color: #666;
         }
         
         .nav-tabs button.active {
@@ -78,6 +89,7 @@
         
         .nav-tabs button:hover {
             border-color: #667eea;
+            color: #667eea;
         }
         
         .panel {
@@ -90,17 +102,23 @@
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .schedule-card {
             background: white;
             padding: 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             margin-bottom: 1rem;
-            border-left: 4px solid #667eea;
+            border-left: 5px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .schedule-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         }
         
         .schedule-card.completed {
@@ -110,7 +128,7 @@
         
         .schedule-date {
             font-size: 1.1rem;
-            font-weight: bold;
+            font-weight: 700;
             color: #667eea;
             margin-bottom: 0.5rem;
         }
@@ -118,60 +136,76 @@
         .schedule-theme {
             font-size: 1rem;
             color: #333;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             font-weight: 600;
         }
         
         .schedule-content {
             font-size: 0.9rem;
-            color: #666;
+            color: #555;
             line-height: 1.6;
             margin-bottom: 1rem;
         }
         
         .schedule-subject {
-            background: #f5f5f5;
-            padding: 0.8rem;
-            border-radius: 6px;
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
             margin-bottom: 0.8rem;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            border-left: 3px solid #667eea;
         }
         
         .schedule-subject strong {
             color: #667eea;
             display: block;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+        
+        .schedule-subject:last-child {
+            margin-bottom: 0;
         }
         
         .input-group {
             display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
             flex-wrap: wrap;
         }
         
         .input-group input,
         .input-group select {
-            padding: 0.6rem 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            padding: 0.7rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
             font-size: 0.9rem;
             font-family: inherit;
+            transition: border-color 0.3s;
+            background: white;
+            color: #333;
+        }
+        
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
         }
         
         .input-group input[type="number"] {
-            width: 100px;
+            width: 110px;
         }
         
         .input-group button {
-            padding: 0.6rem 1.2rem;
+            padding: 0.7rem 1.4rem;
             background: #667eea;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: background 0.3s;
+            font-size: 0.95rem;
         }
         
         .input-group button:hover {
@@ -180,7 +214,7 @@
         
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -189,24 +223,26 @@
             background: white;
             padding: 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         
         .dashboard-card h3 {
             color: #667eea;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #f0f0f0;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
             padding-bottom: 0.8rem;
+            font-weight: 700;
         }
         
         .dashboard-card canvas {
-            max-height: 250px;
+            max-height: 280px;
         }
         
         .stat-item {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 0.8rem 0;
             border-bottom: 1px solid #f0f0f0;
             font-size: 0.95rem;
@@ -216,9 +252,15 @@
             border-bottom: none;
         }
         
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+        
         .stat-value {
-            font-weight: 600;
+            font-weight: 700;
             color: #667eea;
+            font-size: 1.1rem;
         }
         
         .weakness-table {
@@ -235,23 +277,25 @@
             color: white;
             padding: 1rem;
             text-align: left;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 0.95rem;
         }
         
         .weakness-table td {
-            padding: 0.8rem 1rem;
-            border-bottom: 1px solid #eee;
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.9rem;
         }
         
         .weakness-table tr:hover {
-            background: #f9f9f9;
+            background: #f8f9fa;
         }
         
         .status-badge {
             display: inline-block;
-            padding: 0.3rem 0.8rem;
+            padding: 0.4rem 1rem;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
         }
         
@@ -272,30 +316,14 @@
         
         .loading {
             text-align: center;
-            padding: 2rem;
-            color: white;
-            font-size: 1.1rem;
-        }
-        
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-        
-        .success {
-            background: #dcfce7;
-            color: #15803d;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
+            padding: 3rem 1rem;
+            color: #666;
+            font-size: 1rem;
         }
         
         @media (max-width: 768px) {
             .header h1 {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
             
             .header {
@@ -315,17 +343,9 @@
                 flex-direction: column;
             }
             
-            .input-group input[type="number"] {
+            .input-group input[type="number"],
+            .input-group button {
                 width: 100%;
-            }
-            
-            .weakness-table {
-                font-size: 0.9rem;
-            }
-            
-            .weakness-table th,
-            .weakness-table td {
-                padding: 0.6rem 0.8rem;
             }
         }
     </style>
@@ -335,7 +355,7 @@
         <div class="header">
             <h1>📚 FE合格学習管理</h1>
             <p>基本情報技術者試験 11/2 合格に向けた学習進捗トラッカー</p>
-            <p id="sync-status" style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">Firebase接続中...</p>
+            <div class="sync-status" id="sync-status">🔄 Firebase接続中...</div>
         </div>
         
         <div class="nav-tabs">
@@ -344,64 +364,51 @@
             <button class="nav-btn" data-panel="weakness">🎯 科目B弱点管理</button>
         </div>
         
-        <!-- ダッシュボード -->
         <div id="dashboard" class="panel active">
             <div class="dashboard-grid">
                 <div class="dashboard-card">
                     <h3>📈 今週の進捗</h3>
-                    <div id="week-progress-chart-container">
-                        <canvas id="weekProgressChart"></canvas>
-                    </div>
+                    <canvas id="weekProgressChart"></canvas>
                 </div>
                 
                 <div class="dashboard-card">
                     <h3>⏱️ 学習統計</h3>
                     <div class="stat-item">
-                        <span>推奨総勉強時間</span>
-                        <span class="stat-value">173.5 時間</span>
+                        <span class="stat-label">推奨総勉強時間</span>
+                        <span class="stat-value">173.5h</span>
                     </div>
                     <div class="stat-item">
-                        <span>実績勉強時間</span>
-                        <span class="stat-value" id="total-actual-hours">0 時間</span>
+                        <span class="stat-label">実績勉強時間</span>
+                        <span class="stat-value" id="total-actual-hours">0h</span>
                     </div>
                     <div class="stat-item">
-                        <span>達成率</span>
-                        <span class="stat-value" id="achievement-rate">0 %</span>
-                    </div>
-                    <div class="stat-item">
-                        <span>今週の予定</span>
-                        <span class="stat-value" id="week-planned">0 時間</span>
-                    </div>
-                    <div class="stat-item">
-                        <span>今週の実績</span>
-                        <span class="stat-value" id="week-actual">0 時間</span>
+                        <span class="stat-label">達成率</span>
+                        <span class="stat-value" id="achievement-rate">0%</span>
                     </div>
                 </div>
                 
                 <div class="dashboard-card">
                     <h3>✅ 完了状況</h3>
                     <div class="stat-item">
-                        <span>完了</span>
-                        <span class="stat-value" id="completed-count">0 日</span>
+                        <span class="stat-label">完了</span>
+                        <span class="stat-value" id="completed-count">0日</span>
                     </div>
                     <div class="stat-item">
-                        <span>進行中</span>
-                        <span class="stat-value" id="inprogress-count">0 日</span>
+                        <span class="stat-label">進行中</span>
+                        <span class="stat-value" id="inprogress-count">0日</span>
                     </div>
                     <div class="stat-item">
-                        <span>未着手</span>
-                        <span class="stat-value" id="notstarted-count">0 日</span>
+                        <span class="stat-label">未着手</span>
+                        <span class="stat-value" id="notstarted-count">0日</span>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- 日別スケジュール -->
         <div id="schedule" class="panel">
             <div id="schedule-container" class="loading">スケジュール読み込み中...</div>
         </div>
         
-        <!-- 科目B弱点管理 -->
         <div id="weakness" class="panel">
             <div class="dashboard-card">
                 <h3>🎯 科目B分野別 理解度管理</h3>
@@ -414,8 +421,7 @@
                             <th>アクション</th>
                         </tr>
                     </thead>
-                    <tbody id="weakness-tbody">
-                    </tbody>
+                    <tbody id="weakness-tbody"></tbody>
                 </table>
             </div>
         </div>
@@ -423,9 +429,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-        import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 
-        // Firebase設定
         const firebaseConfig = {
             apiKey: "AIzaSyAWWMmCu0A0aDP7ocBX6tYtaZy7sEvzAHw",
             authDomain: "fe-studytracker.firebaseapp.com",
@@ -433,35 +438,69 @@
             projectId: "fe-studytracker",
             storageBucket: "fe-studytracker.firebasestorage.app",
             messagingSenderId: "796057433997",
-            appId: "1:796057433997:web:65838f21a4b24aad40efc4",
-            measurementId: "G-KD9CZYXBXG"
+            appId: "1:796057433997:web:65838f21a4b24aad40efc4"
         };
 
-        // Firebase初期化
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         
-        // グローバルデータ
-        const scheduleData = [];
+        const scheduleData = {};
         const weaknessData = {};
         let charts = {};
 
-        // スケジュール データ（days_full2.jsonから）
         const daysData = [
-            {date:"2026-09-13",wd:"日",phase:1,week:1,theme:"巻き返しスタート：TACで科目A、出るとこだけ！で科目Bを開始",hours:3.0,subjectA_content:"通読・知識の呼び戻し（要確認：目次と照合し章単位に調整）",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.1-15",subjectA_problems:"",subjectB_content:"Step1 疑似言語の読み方：基礎知識のインプット（要確認：目次と照合し章単位に調整）",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.1-20",subjectB_problems:"",review:"",goal:"完璧な理解より「今日から毎日机に向かう」ことを最優先。TACの読みやすさを活かして勢いをつける",priority:"必須",note:"9/1〜9/12分の遅れ（約25.5時間相当）は取り戻せない前提。ここからの巻き返しは「平日+30分・休日+30分・10月後半+30〜60分」の上乗せで設計している（詳細は00シート参照）"},
-            {date:"2026-09-14",wd:"月",phase:1,week:1,theme:"巻き返し継続",hours:2.0,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.16-35",subjectA_problems:"",subjectB_content:"Step1 疑似言語の読み方：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.21-30",subjectB_problems:"",review:"前日のトレースミス・暗記事項を5分だけ見直す",goal:"",priority:"必須",note:""},
-            {date:"2026-09-15",wd:"火",phase:1,week:1,theme:"巻き返し継続",hours:2.0,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.36-55",subjectA_problems:"",subjectB_content:"Step2 変数・配列：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.31-50",subjectB_problems:"",review:"前日のトレースミス・暗記事項を5分だけ見直す",goal:"",priority:"必須",note:""},
-            {date:"2026-09-16",wd:"水",phase:1,week:1,theme:"巻き返し継続",hours:2.0,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.56-75",subjectA_problems:"",subjectB_content:"Step2 変数・配列：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.51-70",subjectB_problems:"",review:"前日のトレースミス・暗記事項を5分だけ見直す",goal:"",priority:"必須",note:""},
-            {date:"2026-09-17",wd:"木",phase:1,week:1,theme:"巻き返し継続",hours:2.0,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.76-95",subjectA_problems:"",subjectB_content:"Step3 条件分岐・ループ：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.71-90",subjectB_problems:"",review:"前日のトレースミス・暗記事項を5分だけ見直す",goal:"",priority:"必須",note:""},
-            {date:"2026-09-18",wd:"金",phase:1,week:1,theme:"巻き返し継続",hours:2.0,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.96-115",subjectA_problems:"",subjectB_content:"Step3 条件分岐・ループ：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.91-110",subjectB_problems:"",review:"前日のトレースミス・暗記事項を5分だけ見直す",goal:"",priority:"必須",note:""},
-            {date:"2026-09-19",wd:"土",phase:1,week:2,theme:"シルバーウィーク集中①",hours:4.5,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.116-145",subjectA_problems:"",subjectB_content:"Step3 条件分岐・ループ：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.111-130",subjectB_problems:"",review:"前週に間違えた問題を1〜2問、簡単に見直す",goal:"",priority:"必須",note:"シルバーウィーク(5連休)：休日扱いで学習時間4.5時間を確保。トレース力強化に充てる"},
-            {date:"2026-09-20",wd:"日",phase:1,week:2,theme:"シルバーウィーク集中②＋パーフェクトラーニング",hours:4.5,subjectA_content:"本番形式の力試し（科目A20問）＋弱点分野の洗い出し",subjectA_material:"IPA公開問題 2024年度(令和6年度)",subjectA_pages:"",subjectA_problems:"20問",subjectB_content:"本番形式の力試し（科目B6問）＋弱点分野の洗い出し（診断1）",subjectB_material:"IPA公開問題 2024年度(令和6年度)",subjectB_pages:"",subjectB_problems:"6問",review:"前週に間違えた問題を1〜2問、簡単に見直す",goal:"",priority:"必須",note:"診断1実施。04シートに得点・弱点を記録"},
-            {date:"2026-09-21",wd:"月",phase:1,week:2,theme:"シルバーウィーク集中③",hours:4.5,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.146-175",subjectA_problems:"",subjectB_content:"Step4 トレース：問題文を読む→処理の目的を日本語で説明→変数・配列を書き出す→表でトレース→1行ずつ処理を追う→選択肢を検証",subjectB_material:"アルゴリズム×模擬言語(40問+21問)",subjectB_pages:"",subjectB_problems:"問1-4",review:"前週に間違えた問題を1〜2問、簡単に見直す",goal:"",priority:"必須",note:"シルバーウィーク(5連休)：休日扱いで学習時間4.5時間を確保。トレース力強化に充てる"},
-            {date:"2026-09-22",wd:"火",phase:1,week:2,theme:"シルバーウィーク集中④",hours:4.5,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.176-205",subjectA_problems:"",subjectB_content:"Step4 トレース：問題文を読む→処理の目的を日本語で説明→変数・配列を書き出す→表でトレース→1行ずつ処理を追う→選択肢を検証",subjectB_material:"アルゴリズム×模擬言語(40問+21問)",subjectB_pages:"",subjectB_problems:"問5-8",review:"前週に間違えた問題を1〜2問、簡単に見直す",goal:"トレース用の変数表・配列表のフォーマットを確立する。",priority:"必須",note:""},
-            {date:"2026-09-23",wd:"水",phase:1,week:2,theme:"シルバーウィーク集中⑤",hours:4.5,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.206-235",subjectA_problems:"",subjectB_content:"Step4 トレース：問題文を読む→処理の目的を日本語で説明→変数・配列を書き出す→表でトレース→1行ずつ処理を追う→選択肢を検証",subjectB_material:"アルゴリズム×模擬言語(40問+21問)",subjectB_pages:"",subjectB_problems:"問9-12",review:"前週に間違えた問題を1〜2問、簡単に見直す",goal:"トレース力が高まる。初見の問題でも変数を追跡できるようになる。",priority:"必須",note:"シルバーウィーク最終日"},
+            {date:"2026-09-13",wd:"日",phase:1,week:1,theme:"巻き返しスタート",hours:4.5,subjectA_material:"TAC",subjectA_content:"通読・知識の呼び戻し",subjectA_pages:"p.1-52",subjectB_material:"パーフェクトラーニング",subjectB_content:"週の振り返り",subjectB_pages:"",subjectB_problems:"1セット"},
+            {date:"2026-09-14",wd:"月",phase:1,week:1,theme:"疑似言語の読み方",hours:2.0,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.53-76",subjectB_material:"出るとこだけ！科目B",subjectB_content:"Step1",subjectB_pages:"p.1-23",subjectB_problems:""},
+            {date:"2026-09-15",wd:"火",phase:1,week:1,theme:"疑似言語の読み方",hours:2.0,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.77-99",subjectB_material:"出るとこだけ！",subjectB_content:"Step1",subjectB_pages:"p.24-47",subjectB_problems:""},
+            {date:"2026-09-16",wd:"水",phase:1,week:1,theme:"変数・配列",hours:2.0,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.100-123",subjectB_material:"出るとこだけ！",subjectB_content:"Step2",subjectB_pages:"p.48-70",subjectB_problems:""},
+            {date:"2026-09-17",wd:"木",phase:1,week:1,theme:"変数・配列",hours:2.0,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.124-146",subjectB_material:"出るとこだけ！",subjectB_content:"Step2",subjectB_pages:"p.71-94",subjectB_problems:""},
+            {date:"2026-09-18",wd:"金",phase:1,week:1,theme:"変数・配列",hours:2.0,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.147-170",subjectB_material:"出るとこだけ！",subjectB_content:"Step2",subjectB_pages:"p.95-117",subjectB_problems:""},
+            {date:"2026-09-19",wd:"土",phase:1,week:2,theme:"条件分岐・ループ",hours:4.5,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.171-223",subjectB_material:"出るとこだけ！",subjectB_content:"Step3",subjectB_pages:"p.118-170",subjectB_problems:""},
+            {date:"2026-09-20",wd:"日",phase:1,week:2,theme:"週次復習",hours:4.5,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.224-275",subjectB_material:"パーフェクトラーニング",subjectB_content:"演習",subjectB_pages:"",subjectB_problems:"1セット"},
+            {date:"2026-09-21",wd:"月",phase:1,week:2,theme:"条件分岐・ループ",hours:4.5,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.276-328",subjectB_material:"出るとこだけ！",subjectB_content:"Step3",subjectB_pages:"p.171-223",subjectB_problems:""},
+            {date:"2026-09-22",wd:"火",phase:1,week:2,theme:"トレース",hours:4.5,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.329-381",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step4 トレース",subjectB_pages:"",subjectB_problems:"問1-2"},
+            {date:"2026-09-23",wd:"水",phase:1,week:2,theme:"トレース",hours:4.5,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.382-434",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step4 トレース",subjectB_pages:"",subjectB_problems:"問3-5"},
+            {date:"2026-09-24",wd:"木",phase:1,week:3,theme:"探索・ソート",hours:2.0,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.435-457",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step5",subjectB_pages:"",subjectB_problems:"問6-7"},
+            {date:"2026-09-25",wd:"金",phase:1,week:3,theme:"探索・ソート",hours:2.0,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.458-481",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step5",subjectB_pages:"",subjectB_problems:"問8-8"},
+            {date:"2026-09-26",wd:"土",phase:1,week:3,theme:"探索・ソート",hours:4.5,subjectA_material:"TAC",subjectA_content:"通読",subjectA_pages:"p.482-534",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step5",subjectB_pages:"",subjectB_problems:"問9-11"},
+            {date:"2026-09-27",wd:"日",phase:1,week:3,theme:"中間診断1",hours:4.5,subjectA_material:"IPA公開問題 2024年度",subjectA_content:"力試し（科目A20問）",subjectA_pages:"",subjectA_problems:"20問",subjectB_material:"IPA公開問題 2024年度",subjectB_content:"力試し（科目B6問）",subjectB_pages:"",subjectB_problems:"6問"},
+            {date:"2026-09-28",wd:"月",phase:1,week:3,theme:"データ構造",hours:2.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"6問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step6",subjectB_pages:"",subjectB_problems:"問12"},
+            {date:"2026-09-29",wd:"火",phase:1,week:3,theme:"データ構造",hours:2.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"6問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step6",subjectB_pages:"",subjectB_problems:"問13-14"},
+            {date:"2026-09-30",wd:"水",phase:1,week:3,theme:"データ構造",hours:2.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"6問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step6",subjectB_pages:"",subjectB_problems:"問15"},
+            {date:"2026-10-01",wd:"木",phase:1,week:4,theme:"木構造",hours:2.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"6問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step7",subjectB_pages:"",subjectB_problems:"問16"},
+            {date:"2026-10-02",wd:"金",phase:1,week:4,theme:"木構造",hours:2.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"6問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step7",subjectB_pages:"",subjectB_problems:"問17-19"},
+            {date:"2026-10-03",wd:"土",phase:1,week:4,theme:"木構造",hours:4.5,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"7問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step7",subjectB_pages:"",subjectB_problems:"問20-22"},
+            {date:"2026-10-04",wd:"日",phase:1,week:4,theme:"総復習＋パーフェクト",hours:4.5,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"",subjectB_material:"パーフェクトラーニング",subjectB_content:"演習",subjectB_pages:"",subjectB_problems:"1セット"},
+            {date:"2026-10-05",wd:"月",phase:1,week:4,theme:"手術前 最終仕上げ①",hours:2.5,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"5問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"複合問題",subjectB_pages:"",subjectB_problems:"問23-24"},
+            {date:"2026-10-06",wd:"火",phase:1,week:4,theme:"入院準備日",hours:3.5,subjectA_material:"過去問道場",subjectA_content:"軽い復習",subjectA_pages:"",subjectA_problems:"5問",subjectB_material:"復習",subjectB_content:"安心材料の確認",subjectB_pages:"",subjectB_problems:""},
+            {date:"2026-10-07",wd:"水",phase:2,week:5,theme:"手術・回復（学習なし）",hours:0.0,subjectA_material:"",subjectA_content:"体調回復を最優先",subjectA_pages:"",subjectA_problems:"",subjectB_material:"",subjectB_content:"",subjectB_pages:"",subjectB_problems:""},
+            {date:"2026-10-08",wd:"木",phase:2,week:5,theme:"手術・回復（学習なし）",hours:0.0,subjectA_material:"",subjectA_content:"体調回復を最優先",subjectA_pages:"",subjectA_problems:"",subjectB_material:"",subjectB_content:"",subjectB_pages:"",subjectB_problems:""},
+            {date:"2026-10-09",wd:"金",phase:2,week:5,theme:"手術・回復（学習なし）",hours:0.0,subjectA_material:"",subjectA_content:"体調回復を最優先",subjectA_pages:"",subjectA_problems:"",subjectB_material:"",subjectB_content:"",subjectB_pages:"",subjectB_problems:""},
+            {date:"2026-10-10",wd:"土",phase:2,week:5,theme:"手術・回復（学習なし）",hours:0.0,subjectA_material:"",subjectA_content:"体調回復を最優先",subjectA_pages:"",subjectA_problems:"",subjectB_material:"",subjectB_content:"",subjectB_pages:"",subjectB_problems:""},
+            {date:"2026-10-11",wd:"日",phase:2,week:5,theme:"手術・回復（学習なし）",hours:0.0,subjectA_material:"",subjectA_content:"体調回復を最優先",subjectA_pages:"",subjectA_problems:"",subjectB_material:"",subjectB_content:"",subjectB_pages:"",subjectB_problems:""},
+            {date:"2026-10-12",wd:"月",phase:2,week:5,theme:"手術・回復（学習なし）",hours:0.0,subjectA_material:"",subjectA_content:"体調回復を最優先",subjectA_pages:"",subjectA_problems:"",subjectB_material:"",subjectB_content:"",subjectB_pages:"",subjectB_problems:""},
+            {date:"2026-10-13",wd:"火",phase:2,week:5,theme:"手術・回復（学習なし）",hours:0.0,subjectA_material:"",subjectA_content:"体調回復を最優先",subjectA_pages:"",subjectA_problems:"",subjectB_material:"",subjectB_content:"",subjectB_pages:"",subjectB_problems:""},
+            {date:"2026-10-14",wd:"水",phase:2,week:5,theme:"手術・回復（学習なし）",hours:0.0,subjectA_material:"",subjectA_content:"体調回復を最優先",subjectA_pages:"",subjectA_problems:"",subjectB_material:"",subjectB_content:"",subjectB_pages:"",subjectB_problems:""},
+            {date:"2026-10-15",wd:"木",phase:3,week:6,theme:"復帰1日目",hours:3.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"5問",subjectB_material:"アルゴリズム×模擬言語＋超効率の教科書",subjectB_content:"Step8 再帰",subjectB_pages:"",subjectB_problems:"問25"},
+            {date:"2026-10-16",wd:"金",phase:3,week:6,theme:"復帰2日目",hours:3.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"5問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step8 再帰",subjectB_pages:"",subjectB_problems:"問26-28"},
+            {date:"2026-10-17",wd:"土",phase:3,week:6,theme:"復帰3日目",hours:3.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"6問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step8 再帰",subjectB_pages:"",subjectB_problems:"問29-30"},
+            {date:"2026-10-18",wd:"日",phase:3,week:6,theme:"複合問題",hours:6.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"10問",subjectB_material:"パーフェクトラーニング＋複合問題",subjectB_content:"複合問題演習",subjectB_pages:"",subjectB_problems:"9問"},
+            {date:"2026-10-19",wd:"月",phase:3,week:6,theme:"中間診断2",hours:6.0,subjectA_material:"IPA公開問題 2026年度",subjectA_content:"力試し（科目A20問）",subjectA_pages:"",subjectA_problems:"20問",subjectB_material:"IPA公開問題 2026年度",subjectB_content:"力試し（科目B6問）",subjectB_pages:"",subjectB_problems:"6問"},
+            {date:"2026-10-20",wd:"火",phase:3,week:6,theme:"クラス・オブジェクト",hours:6.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"10問",subjectB_material:"アルゴリズム×模擬言語＋教科書",subjectB_content:"Step9 クラス・オブジェクト",subjectB_pages:"",subjectB_problems:"問31-33"},
+            {date:"2026-10-21",wd:"水",phase:3,week:6,theme:"クラス・オブジェクト",hours:6.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"10問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step9 クラス・オブジェクト",subjectB_pages:"",subjectB_problems:"問34-36"},
+            {date:"2026-10-22",wd:"木",phase:3,week:7,theme:"複合問題",hours:6.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"10問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"Step10 複合問題",subjectB_pages:"",subjectB_problems:"問37-40"},
+            {date:"2026-10-23",wd:"金",phase:3,week:7,theme:"複合問題",hours:6.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"10問",subjectB_material:"パーフェクトラーニング＋複合問題",subjectB_content:"複合問題演習",subjectB_pages:"",subjectB_problems:"9問"},
+            {date:"2026-10-24",wd:"土",phase:3,week:7,theme:"総仕上げ直前",hours:6.0,subjectA_material:"過去問道場",subjectA_content:"過去問演習",subjectA_pages:"",subjectA_problems:"10問",subjectB_material:"アルゴリズム×模擬言語",subjectB_content:"複合問題",subjectB_pages:"",subjectB_problems:"問41-43"},
+            {date:"2026-10-25",wd:"日",phase:4,week:8,theme:"模試1：本番形式（190分）",hours:6.0,subjectA_material:"パーフェクトラーニング 令和8年 対策問題1",subjectA_content:"本番と同じ90分",subjectA_pages:"",subjectA_problems:"60問",subjectB_material:"パーフェクトラーニング 令和8年 対策問題1",subjectB_content:"本番と同じ100分",subjectB_pages:"",subjectB_problems:"20問"},
+            {date:"2026-10-26",wd:"月",phase:4,week:8,theme:"模試1 分析日",hours:6.0,subjectA_material:"模試1の科目A見直し",subjectA_content:"間違えた問題を分野ごとに分類",subjectA_pages:"",subjectA_problems:"",subjectB_material:"模試1の科目B見直し",subjectB_content:"間違えた問題を分類",subjectB_pages:"",subjectB_problems:""},
+            {date:"2026-10-27",wd:"火",phase:4,week:8,theme:"弱点補強＋情報セキュリティ",hours:6.0,subjectA_material:"過去問道場",subjectA_content:"弱点分野を集中演習",subjectA_pages:"",subjectA_problems:"15問",subjectB_material:"科目B情報セキュリティ特化問題",subjectB_content:"情報セキュリティ + 弱点分野再演習",subjectB_pages:"",subjectB_problems:"12問"},
+            {date:"2026-10-28",wd:"水",phase:4,week:8,theme:"模試2：本番形式（190分）",hours:6.0,subjectA_material:"パーフェクトラーニング 令和8年 対策問題2",subjectA_content:"本番と同じ90分",subjectA_pages:"",subjectA_problems:"60問",subjectB_material:"パーフェクトラーニング 令和8年 対策問題2",subjectB_content:"本番と同じ100分",subjectB_pages:"",subjectB_problems:"20問"},
+            {date:"2026-10-29",wd:"木",phase:4,week:8,theme:"模試2 分析日＋弱点補強",hours:6.0,subjectA_material:"模試2の科目A見直し",subjectA_content:"間違えた問題の分類と復習",subjectA_pages:"",subjectA_problems:"",subjectB_material:"模試2の科目B見直し＋特化問題",subjectB_content:"分析 + 情報セキュリティ",subjectB_pages:"",subjectB_problems:"12問"},
+            {date:"2026-10-30",wd:"金",phase:4,week:8,theme:"模試3：本番形式（最終模試）",hours:6.0,subjectA_material:"パーフェクトラーニング 令和8年 対策問題3",subjectA_content:"本番同様の90分",subjectA_pages:"",subjectA_problems:"60問",subjectB_material:"パーフェクトラーニング 令和8年 対策問題3",subjectB_content:"本番同様の100分",subjectB_pages:"",subjectB_problems:"20問"},
+            {date:"2026-10-31",wd:"土",phase:4,week:8,theme:"模試3 分析＋最終補強",hours:6.0,subjectA_material:"模試1〜3の間違えた問題総復習",subjectA_content:"繰り返し間違えた分野のみ復習",subjectA_pages:"",subjectA_problems:"",subjectB_material:"模試1〜3総復習＋特化問題",subjectB_content:"情報セキュリティ最終確認＋頻出パターン整理",subjectB_pages:"",subjectB_problems:"12問"},
+            {date:"2026-11-01",wd:"日",phase:5,week:9,theme:"最終確認日：新しい教材なし",hours:6.0,subjectA_material:"これまでの間違えた問題・暗記確認",subjectA_content:"用語・計算パターンの最終確認のみ",subjectA_pages:"",subjectA_problems:"",subjectB_material:"再帰・クラス・トレース頻出パターン確認",subjectB_content:"情報セキュリティ用語確認 + 時間配分シミュレーション",subjectB_pages:"",subjectB_problems:""}
         ];
 
-        // 弱点分野の初期化
         const weaknessFields = [
             {name:"問題文読解",level:"要注意"},
             {name:"疑似言語",level:"未評価"},
@@ -480,71 +519,54 @@
             {name:"情報セキュリティ",level:"未評価"},
         ];
 
-        // Firebase同期関数
         async function syncToFirebase() {
             try {
                 const userId = "user_001";
                 const scheduleRef = ref(db, `users/${userId}/schedule`);
                 const weaknessRef = ref(db, `users/${userId}/weakness`);
-                
                 await set(scheduleRef, scheduleData);
                 await set(weaknessRef, weaknessData);
-                
                 document.getElementById('sync-status').textContent = '✅ Firebase同期完了';
                 document.getElementById('sync-status').style.color = '#10b981';
             } catch (error) {
-                console.error('Firebase同期エラー:', error);
-                document.getElementById('sync-status').textContent = '⚠️ 同期エラー：インターネット接続を確認してください';
+                document.getElementById('sync-status').textContent = '⚠️ 同期エラー';
                 document.getElementById('sync-status').style.color = '#dc2626';
             }
         }
 
-        // スケジュール表示
         function renderSchedule() {
             const container = document.getElementById('schedule-container');
             container.innerHTML = '';
-            
             daysData.forEach(day => {
                 const card = document.createElement('div');
                 card.className = 'schedule-card';
-                
                 const status = scheduleData[day.date]?.status || '未着手';
                 if(status === '完了') card.classList.add('completed');
-                
                 card.innerHTML = `
                     <div class="schedule-date">${day.date} (${day.wd})</div>
                     <div class="schedule-theme">${day.theme}</div>
-                    <div class="schedule-content">
-                        <strong>予定時間:</strong> ${day.hours}時間
-                    </div>
-                    <div class="schedule-subject">
-                        <strong>📖 科目A: ${day.subjectA_material}</strong>
-                        ${day.subjectA_pages ? `ページ: ${day.subjectA_pages}` : ''}
-                    </div>
-                    <div class="schedule-subject">
-                        <strong>💻 科目B: ${day.subjectB_material}</strong>
-                        ${day.subjectB_pages ? `ページ: ${day.subjectB_pages}` : ''}
-                    </div>
+                    <div class="schedule-content"><strong>予定時間:</strong> ${day.hours}時間</div>
+                    ${day.hours > 0 ? `
+                    <div class="schedule-subject"><strong>📖 科目A: ${day.subjectA_material}</strong>${day.subjectA_pages ? `ページ: ${day.subjectA_pages}` : ''}</div>
+                    <div class="schedule-subject"><strong>💻 科目B: ${day.subjectB_material}</strong>${day.subjectB_pages ? `ページ: ${day.subjectB_pages}` : ''}</div>
+                    ` : ''}
                     <div class="input-group">
-                        <input type="number" class="actual-hours" data-date="${day.date}" placeholder="実績時間(h)" value="${scheduleData[day.date]?.actualHours || ''}">
-                        <select class="status-select" data-date="${day.date}">
+                        <input type="number" class="actual-hours" data-date="${day.date}" placeholder="実績時間(h)" value="${scheduleData[day.date]?.actualHours || ''}" ${day.hours > 0 ? '' : 'disabled'}>
+                        <select class="status-select" data-date="${day.date}" ${day.hours > 0 ? '' : 'disabled'}>
                             <option value="未着手" ${status === '未着手' ? 'selected' : ''}>未着手</option>
                             <option value="進行中" ${status === '進行中' ? 'selected' : ''}>進行中</option>
                             <option value="完了" ${status === '完了' ? 'selected' : ''}>完了</option>
                         </select>
-                        <button class="save-btn" data-date="${day.date}">保存</button>
+                        <button class="save-btn" data-date="${day.date}" ${day.hours > 0 ? '' : 'disabled'}>保存</button>
                     </div>
                 `;
-                
                 container.appendChild(card);
             });
-            
             document.querySelectorAll('.save-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const date = e.target.dataset.date;
                     const actualHours = parseFloat(document.querySelector(`.actual-hours[data-date="${date}"]`).value) || 0;
                     const status = document.querySelector(`.status-select[data-date="${date}"]`).value;
-                    
                     scheduleData[date] = {actualHours, status};
                     syncToFirebase();
                     updateDashboard();
@@ -552,98 +574,71 @@
             });
         }
 
-        // ダッシュボード更新
         function updateDashboard() {
-            let totalActual = 0;
-            let completed = 0, inProgress = 0, notStarted = 0;
-            
+            let totalActual = 0, completed = 0, inProgress = 0, notStarted = 0;
             Object.entries(scheduleData).forEach(([date, data]) => {
                 totalActual += data.actualHours || 0;
                 if(data.status === '完了') completed++;
                 else if(data.status === '進行中') inProgress++;
                 else notStarted++;
             });
-            
             const achievementRate = Math.round((totalActual / 173.5) * 100);
-            
-            document.getElementById('total-actual-hours').textContent = totalActual.toFixed(1) + ' 時間';
-            document.getElementById('achievement-rate').textContent = achievementRate + ' %';
-            document.getElementById('completed-count').textContent = completed + ' 日';
-            document.getElementById('inprogress-count').textContent = inProgress + ' 日';
-            document.getElementById('notstarted-count').textContent = notStarted + ' 日';
-            
+            document.getElementById('total-actual-hours').textContent = totalActual.toFixed(1) + 'h';
+            document.getElementById('achievement-rate').textContent = achievementRate + '%';
+            document.getElementById('completed-count').textContent = completed + '日';
+            document.getElementById('inprogress-count').textContent = inProgress + '日';
+            document.getElementById('notstarted-count').textContent = notStarted + '日';
             if(charts.weekProgress) {
-                charts.weekProgress.data.datasets[0].data = [14.5, totalActual * 0.15, 19.0 * 0.2];
+                charts.weekProgress.data.datasets[0].data = [20, totalActual * 0.1, achievementRate];
                 charts.weekProgress.update();
             }
         }
 
-        // 弱点管理テーブル
         function renderWeakness() {
             const tbody = document.getElementById('weakness-tbody');
             tbody.innerHTML = '';
-            
             weaknessFields.forEach(field => {
                 const row = tbody.insertRow();
                 const levelClass = field.level === '要注意' ? 'weak' : field.level === '学習中' ? 'learning' : 'strong';
-                
                 row.innerHTML = `
                     <td>${field.name}</td>
                     <td><span class="status-badge ${levelClass}">${field.level}</span></td>
-                    <td><input type="number" placeholder="%" min="0" max="100" value="${weaknessData[field.name]?.correctRate || '0'}" style="width: 60px;"></td>
-                    <td>
-                        <select onchange="updateWeakness('${field.name}', this.value)" style="padding: 0.3rem;">
-                            <option value="未評価" ${field.level === '未評価' ? 'selected' : ''}>未評価</option>
-                            <option value="要注意" ${field.level === '要注意' ? 'selected' : ''}>要注意</option>
-                            <option value="学習中" ${field.level === '学習中' ? 'selected' : ''}>学習中</option>
-                            <option value="習得" ${field.level === '習得' ? 'selected' : ''}>習得</option>
-                        </select>
-                    </td>
+                    <td><input type="number" placeholder="%" min="0" max="100" value="0" style="width: 70px; padding: 0.5rem;"></td>
+                    <td><select onchange="updateWeakness('${field.name}', this.value)" style="padding: 0.5rem; font-size: 0.9rem;"><option value="未評価">未評価</option><option value="要注意">要注意</option><option value="学習中">学習中</option><option value="習得">習得</option></select></td>
                 `;
             });
         }
 
-        // グローバル関数
         window.updateWeakness = function(field, level) {
             weaknessData[field] = {level};
             syncToFirebase();
         };
 
-        // ナビゲーション
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-                
                 btn.classList.add('active');
                 const panelId = btn.dataset.panel;
                 document.getElementById(panelId).classList.add('active');
             });
         });
 
-        // 初期化
         function init() {
             renderSchedule();
             renderWeakness();
             updateDashboard();
-            
             const ctx = document.getElementById('weekProgressChart');
-            charts.weekProgress = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['目標', '実績', '達成率'],
-                    datasets: [{
-                        label: '勉強時間(h)',
-                        data: [14.5, 0, 10],
-                        backgroundColor: ['#667eea', '#764ba2', '#10b981'],
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                }
-            });
-            
+            if(ctx) {
+                charts.weekProgress = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['今週予定(h)', '今週実績(h)', '達成率(%)'],
+                        datasets: [{label: '', data: [20, 0, 0], backgroundColor: ['#667eea', '#764ba2', '#10b981']}]
+                    },
+                    options: {responsive: true, maintainAspectRatio: true, indexAxis: 'x'}
+                });
+            }
             syncToFirebase();
         }
 
