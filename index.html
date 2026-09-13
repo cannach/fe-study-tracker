@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FE合格学習管理 - 学習進捗トラッカー</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 1rem;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .nav-tabs button {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-tabs button.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .nav-tabs button:hover {
+            border-color: #667eea;
+        }
+        
+        .panel {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        .panel.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .schedule-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+        }
+        
+        .schedule-card.completed {
+            background: #f0f9ff;
+            border-left-color: #10b981;
+        }
+        
+        .schedule-date {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .schedule-theme {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .schedule-content {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .schedule-subject {
+            background: #f5f5f5;
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin-bottom: 0.8rem;
+            font-size: 0.85rem;
+        }
+        
+        .schedule-subject strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .input-group input,
+        .input-group select {
+            padding: 0.6rem 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+        
+        .input-group input[type="number"] {
+            width: 100px;
+        }
+        
+        .input-group button {
+            padding: 0.6rem 1.2rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .input-group button:hover {
+            background: #764ba2;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .dashboard-card h3 {
+            color: #667eea;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.8rem;
+        }
+        
+        .dashboard-card canvas {
+            max-height: 250px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95rem;
+        }
+        
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .weakness-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .weakness-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .weakness-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .weakness-table tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-badge.weak {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status-badge.learning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-badge.strong {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .success {
+            background: #dcfce7;
+            color: #15803d;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .header {
+                padding: 1.5rem;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .input-group input[type="number"] {
+                width: 100%;
+            }
+            
+            .weakness-table {
+                font-size: 0.9rem;
+            }
+            
+            .weakness-table th,
+            .weakness-table td {
+                padding: 0.6rem 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 FE合格学習管理</h1>
+            <p>基本情報技術者試験 11/2 合格に向けた学習進捗トラッカー</p>
+            <p id="sync-status" style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">Firebase接続中...</p>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="nav-btn active" data-panel="dashboard">📊 ダッシュボード</button>
+            <button class="nav-btn" data-panel="schedule">📅 日別スケジュール</button>
+            <button class="nav-btn" data-panel="weakness">🎯 科目B弱点管理</button>
+        </div>
+        
+        <!-- ダッシュボード -->
+        <div id="dashboard" class="panel active">
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>📈 今週の進捗</h3>
+                    <div id="week-progress-chart-container">
+                        <canvas id="weekProgressChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>⏱️ 学習統計</h3>
+                    <div class="stat-item">
+                        <span>推奨総勉強時間</span>
+                        <span class="stat-value">173.5 時間</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>実績勉強時間</span>
+                        <span class="stat-value" id="total-actual-hours">0 時間</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>達成率</span>
+                        <span class="stat-value" id="achievement-rate">0 %</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>今週の予定</span>
+                        <span class="stat-value" id="week-planned">0 時間</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>今週の実績</span>
+                        <span class="stat-value" id="week-actual">0 時間</span>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>✅ 完了状況</h3>
+                    <div class="stat-item">
+                        <span>完了</span>
+                        <span class="stat-value" id="completed-count">0 日</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>進行中</span>
+                        <span class="stat-value" id="inprogress-count">0 日</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>未着手</span>
+                        <span class="stat-value" id="notstarted-count">0 日</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 日別スケジュール -->
+        <div id="schedule" class="panel">
+            <div id="schedule-container" class="loading">スケジュール読み込み中...</div>
+        </div>
+        
+        <!-- 科目B弱点管理 -->
+        <div id="weakness" class="panel">
+            <div class="dashboard-card">
+                <h3>🎯 科目B分野別 理解度管理</h3>
+                <table class="weakness-table">
+                    <thead>
+                        <tr>
+                            <th>分野</th>
+                            <th>理解度</th>
+                            <th>正答率</th>
+                            <th>アクション</th>
+                        </tr>
+                    </thead>
+                    <tbody id="weakness-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+
+        // Firebase設定
+        const firebaseConfig = {
+            apiKey: "AIzaSyAWWMmCu0A0aDP7ocBX6tYtaZy7sEvzAHw",
+            authDomain: "fe-studytracker.firebaseapp.com",
+            databaseURL: "https://fe-studytracker-default-rtdb.firebaseio.com",
+            projectId: "fe-studytracker",
+            storageBucket: "fe-studytracker.firebasestorage.app",
+            messagingSenderId: "796057433997",
+            appId: "1:796057433997:web:65838f21a4b24aad40efc4",
+            measurementId: "G-KD9CZYXBXG"
+        };
+
+        // Firebase初期化
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        
+        // グローバルデータ
+        const scheduleData = [];
+        const weaknessData = {};
+        let charts = {};
+
+        // スケジュール データ（days_full2.jsonから）
+        const daysData = [
+            {date:"2026-09-13",wd:"日",phase:1,week:1,theme:"巻き返しスタート：TACで科目A、出るとこだけ！で科目Bを開始",hours:3.0,subjectA_content:"通読・知識の呼び戻し（要確認：目次と照合し章単位に調整）",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.1-15",subjectA_problems:"",subjectB_content:"Step1 疑似言語の読み方：基礎知識のインプット（要確認：目次と照合し章単位に調整）",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.1-20",subjectB_problems:"",review:"",goal:"完璧な理解より「今日から毎日机に向かう」ことを最優先。TACの読みやすさを活かして勢いをつける",priority:"必須",note:"9/1〜9/12分の遅れ（約25.5時間相当）は取り戻せない前提。ここからの巻き返しは「平日+30分・休日+30分・10月後半+30〜60分」の上乗せで設計している（詳細は00シート参照）"},
+            {date:"2026-09-14",wd:"月",phase:1,week:1,theme:"巻き返し継続",hours:2.0,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.16-35",subjectA_problems:"",subjectB_content:"Step1 疑似言語の読み方：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.21-30",subjectB_problems:"",review:"前日のトレースミス・暗記事項を5分だけ見直す",goal:"",priority:"必須",note:""},
+            {date:"2026-09-15",wd:"火",phase:1,week:1,theme:"巻き返し継続",hours:2.0,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.36-55",subjectA_problems:"",subjectB_content:"Step2 変数・配列：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.31-50",subjectB_problems:"",review:"前日のトレースミス・暗記事項を5分だけ見直す",goal:"",priority:"必須",note:""},
+            {date:"2026-09-16",wd:"水",phase:1,week:1,theme:"巻き返し継続",hours:2.0,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.56-75",subjectA_problems:"",subjectB_content:"Step2 変数・配列：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.51-70",subjectB_problems:"",review:"前日のトレースミス・暗記事項を5分だけ見直す",goal:"",priority:"必須",note:""},
+            {date:"2026-09-17",wd:"木",phase:1,week:1,theme:"巻き返し継続",hours:2.0,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.76-95",subjectA_problems:"",subjectB_content:"Step3 条件分岐・ループ：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.71-90",subjectB_problems:"",review:"前日のトレースミス・暗記事項を5分だけ見直す",goal:"",priority:"必須",note:""},
+            {date:"2026-09-18",wd:"金",phase:1,week:1,theme:"巻き返し継続",hours:2.0,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.96-115",subjectA_problems:"",subjectB_content:"Step3 条件分岐・ループ：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.91-110",subjectB_problems:"",review:"前日のトレースミス・暗記事項を5分だけ見直す",goal:"",priority:"必須",note:""},
+            {date:"2026-09-19",wd:"土",phase:1,week:2,theme:"シルバーウィーク集中①",hours:4.5,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.116-145",subjectA_problems:"",subjectB_content:"Step3 条件分岐・ループ：基礎知識のインプット",subjectB_material:"出るとこだけ！科目B",subjectB_pages:"p.111-130",subjectB_problems:"",review:"前週に間違えた問題を1〜2問、簡単に見直す",goal:"",priority:"必須",note:"シルバーウィーク(5連休)：休日扱いで学習時間4.5時間を確保。トレース力強化に充てる"},
+            {date:"2026-09-20",wd:"日",phase:1,week:2,theme:"シルバーウィーク集中②＋パーフェクトラーニング",hours:4.5,subjectA_content:"本番形式の力試し（科目A20問）＋弱点分野の洗い出し",subjectA_material:"IPA公開問題 2024年度(令和6年度)",subjectA_pages:"",subjectA_problems:"20問",subjectB_content:"本番形式の力試し（科目B6問）＋弱点分野の洗い出し（診断1）",subjectB_material:"IPA公開問題 2024年度(令和6年度)",subjectB_pages:"",subjectB_problems:"6問",review:"前週に間違えた問題を1〜2問、簡単に見直す",goal:"",priority:"必須",note:"診断1実施。04シートに得点・弱点を記録"},
+            {date:"2026-09-21",wd:"月",phase:1,week:2,theme:"シルバーウィーク集中③",hours:4.5,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.146-175",subjectA_problems:"",subjectB_content:"Step4 トレース：問題文を読む→処理の目的を日本語で説明→変数・配列を書き出す→表でトレース→1行ずつ処理を追う→選択肢を検証",subjectB_material:"アルゴリズム×模擬言語(40問+21問)",subjectB_pages:"",subjectB_problems:"問1-4",review:"前週に間違えた問題を1〜2問、簡単に見直す",goal:"",priority:"必須",note:"シルバーウィーク(5連休)：休日扱いで学習時間4.5時間を確保。トレース力強化に充てる"},
+            {date:"2026-09-22",wd:"火",phase:1,week:2,theme:"シルバーウィーク集中④",hours:4.5,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.176-205",subjectA_problems:"",subjectB_content:"Step4 トレース：問題文を読む→処理の目的を日本語で説明→変数・配列を書き出す→表でトレース→1行ずつ処理を追う→選択肢を検証",subjectB_material:"アルゴリズム×模擬言語(40問+21問)",subjectB_pages:"",subjectB_problems:"問5-8",review:"前週に間違えた問題を1〜2問、簡単に見直す",goal:"トレース用の変数表・配列表のフォーマットを確立する。",priority:"必須",note:""},
+            {date:"2026-09-23",wd:"水",phase:1,week:2,theme:"シルバーウィーク集中⑤",hours:4.5,subjectA_content:"通読・知識の呼び戻し",subjectA_material:"TAC（新しく購入した教材を優先。科目A範囲を通読）",subjectA_pages:"p.206-235",subjectA_problems:"",subjectB_content:"Step4 トレース：問題文を読む→処理の目的を日本語で説明→変数・配列を書き出す→表でトレース→1行ずつ処理を追う→選択肢を検証",subjectB_material:"アルゴリズム×模擬言語(40問+21問)",subjectB_pages:"",subjectB_problems:"問9-12",review:"前週に間違えた問題を1〜2問、簡単に見直す",goal:"トレース力が高まる。初見の問題でも変数を追跡できるようになる。",priority:"必須",note:"シルバーウィーク最終日"},
+        ];
+
+        // 弱点分野の初期化
+        const weaknessFields = [
+            {name:"問題文読解",level:"要注意"},
+            {name:"疑似言語",level:"未評価"},
+            {name:"変数",level:"未評価"},
+            {name:"配列",level:"未評価"},
+            {name:"条件分岐",level:"未評価"},
+            {name:"ループ",level:"未評価"},
+            {name:"トレース",level:"未評価"},
+            {name:"探索",level:"未評価"},
+            {name:"ソート",level:"未評価"},
+            {name:"データ構造",level:"未評価"},
+            {name:"木構造",level:"未評価"},
+            {name:"再帰",level:"要注意"},
+            {name:"クラス",level:"要注意"},
+            {name:"オブジェクト",level:"未評価"},
+            {name:"情報セキュリティ",level:"未評価"},
+        ];
+
+        // Firebase同期関数
+        async function syncToFirebase() {
+            try {
+                const userId = "user_001";
+                const scheduleRef = ref(db, `users/${userId}/schedule`);
+                const weaknessRef = ref(db, `users/${userId}/weakness`);
+                
+                await set(scheduleRef, scheduleData);
+                await set(weaknessRef, weaknessData);
+                
+                document.getElementById('sync-status').textContent = '✅ Firebase同期完了';
+                document.getElementById('sync-status').style.color = '#10b981';
+            } catch (error) {
+                console.error('Firebase同期エラー:', error);
+                document.getElementById('sync-status').textContent = '⚠️ 同期エラー：インターネット接続を確認してください';
+                document.getElementById('sync-status').style.color = '#dc2626';
+            }
+        }
+
+        // スケジュール表示
+        function renderSchedule() {
+            const container = document.getElementById('schedule-container');
+            container.innerHTML = '';
+            
+            daysData.forEach(day => {
+                const card = document.createElement('div');
+                card.className = 'schedule-card';
+                
+                const status = scheduleData[day.date]?.status || '未着手';
+                if(status === '完了') card.classList.add('completed');
+                
+                card.innerHTML = `
+                    <div class="schedule-date">${day.date} (${day.wd})</div>
+                    <div class="schedule-theme">${day.theme}</div>
+                    <div class="schedule-content">
+                        <strong>予定時間:</strong> ${day.hours}時間
+                    </div>
+                    <div class="schedule-subject">
+                        <strong>📖 科目A: ${day.subjectA_material}</strong>
+                        ${day.subjectA_pages ? `ページ: ${day.subjectA_pages}` : ''}
+                    </div>
+                    <div class="schedule-subject">
+                        <strong>💻 科目B: ${day.subjectB_material}</strong>
+                        ${day.subjectB_pages ? `ページ: ${day.subjectB_pages}` : ''}
+                    </div>
+                    <div class="input-group">
+                        <input type="number" class="actual-hours" data-date="${day.date}" placeholder="実績時間(h)" value="${scheduleData[day.date]?.actualHours || ''}">
+                        <select class="status-select" data-date="${day.date}">
+                            <option value="未着手" ${status === '未着手' ? 'selected' : ''}>未着手</option>
+                            <option value="進行中" ${status === '進行中' ? 'selected' : ''}>進行中</option>
+                            <option value="完了" ${status === '完了' ? 'selected' : ''}>完了</option>
+                        </select>
+                        <button class="save-btn" data-date="${day.date}">保存</button>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            document.querySelectorAll('.save-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const date = e.target.dataset.date;
+                    const actualHours = parseFloat(document.querySelector(`.actual-hours[data-date="${date}"]`).value) || 0;
+                    const status = document.querySelector(`.status-select[data-date="${date}"]`).value;
+                    
+                    scheduleData[date] = {actualHours, status};
+                    syncToFirebase();
+                    updateDashboard();
+                });
+            });
+        }
+
+        // ダッシュボード更新
+        function updateDashboard() {
+            let totalActual = 0;
+            let completed = 0, inProgress = 0, notStarted = 0;
+            
+            Object.entries(scheduleData).forEach(([date, data]) => {
+                totalActual += data.actualHours || 0;
+                if(data.status === '完了') completed++;
+                else if(data.status === '進行中') inProgress++;
+                else notStarted++;
+            });
+            
+            const achievementRate = Math.round((totalActual / 173.5) * 100);
+            
+            document.getElementById('total-actual-hours').textContent = totalActual.toFixed(1) + ' 時間';
+            document.getElementById('achievement-rate').textContent = achievementRate + ' %';
+            document.getElementById('completed-count').textContent = completed + ' 日';
+            document.getElementById('inprogress-count').textContent = inProgress + ' 日';
+            document.getElementById('notstarted-count').textContent = notStarted + ' 日';
+            
+            if(charts.weekProgress) {
+                charts.weekProgress.data.datasets[0].data = [14.5, totalActual * 0.15, 19.0 * 0.2];
+                charts.weekProgress.update();
+            }
+        }
+
+        // 弱点管理テーブル
+        function renderWeakness() {
+            const tbody = document.getElementById('weakness-tbody');
+            tbody.innerHTML = '';
+            
+            weaknessFields.forEach(field => {
+                const row = tbody.insertRow();
+                const levelClass = field.level === '要注意' ? 'weak' : field.level === '学習中' ? 'learning' : 'strong';
+                
+                row.innerHTML = `
+                    <td>${field.name}</td>
+                    <td><span class="status-badge ${levelClass}">${field.level}</span></td>
+                    <td><input type="number" placeholder="%" min="0" max="100" value="${weaknessData[field.name]?.correctRate || '0'}" style="width: 60px;"></td>
+                    <td>
+                        <select onchange="updateWeakness('${field.name}', this.value)" style="padding: 0.3rem;">
+                            <option value="未評価" ${field.level === '未評価' ? 'selected' : ''}>未評価</option>
+                            <option value="要注意" ${field.level === '要注意' ? 'selected' : ''}>要注意</option>
+                            <option value="学習中" ${field.level === '学習中' ? 'selected' : ''}>学習中</option>
+                            <option value="習得" ${field.level === '習得' ? 'selected' : ''}>習得</option>
+                        </select>
+                    </td>
+                `;
+            });
+        }
+
+        // グローバル関数
+        window.updateWeakness = function(field, level) {
+            weaknessData[field] = {level};
+            syncToFirebase();
+        };
+
+        // ナビゲーション
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                
+                btn.classList.add('active');
+                const panelId = btn.dataset.panel;
+                document.getElementById(panelId).classList.add('active');
+            });
+        });
+
+        // 初期化
+        function init() {
+            renderSchedule();
+            renderWeakness();
+            updateDashboard();
+            
+            const ctx = document.getElementById('weekProgressChart');
+            charts.weekProgress = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['目標', '実績', '達成率'],
+                    datasets: [{
+                        label: '勉強時間(h)',
+                        data: [14.5, 0, 10],
+                        backgroundColor: ['#667eea', '#764ba2', '#10b981'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                }
+            });
+            
+            syncToFirebase();
+        }
+
+        init();
+    </script>
+</body>
+</html>
