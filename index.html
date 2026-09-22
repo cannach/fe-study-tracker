@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年11月2日 FE合格 学習計画書兼学習管理表</title>
+<style>
+:root{--primary:#1a365d;--accent:#2b6cb0;--success:#276749;--warning:#c05621;--danger:#c53030;--bg:#f7fafc}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;background:var(--bg);color:#2d3748;line-height:1.55;font-size:13px}
+header{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;padding:1rem 1.3rem;position:sticky;top:0;z-index:100}
+header h1{font-size:1.15rem}header p{font-size:.8rem;opacity:.92;margin-top:.15rem}
+nav{background:#2d3748;padding:.3rem .6rem;display:flex;flex-wrap:wrap;gap:.3rem;position:sticky;top:64px;z-index:99}
+nav a{color:#fff;text-decoration:none;padding:.28rem .6rem;border-radius:4px;font-size:.76rem}
+nav a:hover{background:var(--accent)}
+.container{max-width:1560px;margin:0 auto;padding:.65rem}
+section{background:#fff;border-radius:8px;padding:1rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+h2{color:var(--primary);border-bottom:3px solid var(--accent);padding-bottom:.3rem;margin-bottom:.65rem;font-size:1.1rem}
+h3{color:var(--accent);margin:.85rem 0 .4rem;font-size:.98rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.65rem}
+.card{background:#edf2f7;border-radius:6px;padding:.75rem;border-left:4px solid var(--accent)}
+.card.important{border-left-color:var(--danger);background:#fff5f5}
+.card.success{border-left-color:var(--success);background:#f0fff4}
+.card.warning{border-left-color:var(--warning);background:#fffaf0}
+table{width:100%;border-collapse:collapse;font-size:.68rem;margin:.3rem 0}
+th,td{border:1px solid #cbd5e0;padding:.22rem .3rem;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff;position:sticky;top:0;z-index:10;white-space:nowrap}
+tr:nth-child(even){background:#f7fafc}tr:hover{background:#ebf8ff}
+.surgery-row{background:#fed7d7!important}.mock-row{background:#e9d8fd!important}
+.weekend{background:#e6fffa!important}.pl-day{background:#fefcbf!important}
+.blank-row{background:#edf2f7!important;color:#718096}
+.priority-high{color:var(--danger);font-weight:bold}.priority-mid{color:var(--warning)}
+.note{background:#fefcbf;border-left:4px solid #d69e2e;padding:.6rem;margin:.6rem 0;font-size:.8rem}
+.phase{border:2px solid var(--accent);border-radius:8px;padding:.7rem;margin:.55rem 0}
+.phase-title{font-weight:bold;color:var(--primary);font-size:.93rem}
+.scroll-table{overflow-x:auto;max-height:78vh;overflow-y:auto}
+.filter-btns button{margin:2px;padding:3px 8px;border:1px solid var(--accent);background:#fff;border-radius:4px;cursor:pointer;font-size:.75rem}
+.filter-btns button.active{background:var(--accent);color:#fff}
+input[type="number"],input[type="text"],select{border:1px solid #a0aec0;border-radius:3px;padding:2px 4px;font-size:.7rem}
+input[type="number"]{width:48px}.checkbox{width:14px;height:14px}
+.save-status{position:fixed;bottom:12px;right:12px;background:var(--success);color:#fff;padding:6px 14px;border-radius:6px;font-size:.78rem;opacity:0;transition:opacity .3s;z-index:200}
+.save-status.show{opacity:1}
+.btn-row button{padding:6px 12px;margin-right:6px;border:none;border-radius:4px;cursor:pointer;font-size:.78rem}
+.btn-save{background:var(--success);color:#fff}.btn-export{background:var(--accent);color:#fff}.btn-clear{background:var(--danger);color:#fff}
+.tb{font-size:.65rem;color:#4a5568;line-height:1.4}
+@media print{nav,header,.btn-row,.save-status,.filter-btns{display:none!important}}
+</style>
+</head>
+<body>
+<header>
+<h1>基本情報技術者試験 合格 学習計画書兼学習管理表</h1>
+<p>試験日：2026年11月2日｜枠時間＝活動合計｜入力はクラウド（Firebase）に自動保存 <span id="sync-status" style="font-weight:bold">🔄 接続中...</span></p>
+</header>
+<nav>
+<a href="#storage">保存</a>
+<a href="#timebase">時間設計</a>
+<a href="#review">見直し</a>
+<a href="#strategy">戦略</a>
+<a href="#daily">日別</a>
+<a href="#mock">模試</a>
+<a href="#materials">教材</a>
+<a href="#recovery">リカバリー</a>
+<a href="#checkpoints">中間目標</a>
+</nav>
+<div class="container">
+
+<section id="storage">
+<h2>0. 保存</h2>
+<div class="card important">入力はFirebase（クラウド）に自動保存され、どの端末・ブラウザで開いても同じデータが復元されます。通信できない場合はブラウザのlocalStorageに一時保存され、次回オンライン時に同期されます。JSONエクスポートでバックアップも可能です。</div>
+<div class="btn-row" style="margin-top:.4rem">
+<button class="btn-save" onclick="saveAll()">今すぐ保存</button>
+<button class="btn-export" onclick="exportJSON()">JSONエクスポート</button>
+<button class="btn-clear" onclick="clearAll()">全データ削除</button>
+</div>
+</section>
+
+<section id="timebase">
+<h2>1. 時間設計（統一ルール）</h2>
+<div class="grid">
+<div class="card"><strong>PL科目B 1セット</strong><br>解答100分＋分析50分<br>＝ <strong>150分（2.5h）</strong></div>
+<div class="card"><strong>PL（12）〜（15）</strong><br>A60分＋B100分＋分析60分<br>＝ <strong>220分（約3.7h）</strong></div>
+<div class="card"><strong>IPAサンプル</strong><br>A30分＋B40分＋分析60分<br>＝ <strong>130分（約2.2h）</strong></div>
+<div class="card"><strong>TAC模試科目B</strong><br>B100分＋分析50分<br>＝ <strong>150分（2.5h）</strong></div>
+</div>
+<div class="note">
+<strong>ルール</strong>：その日の「枠h」＝記載活動の合計。余る場合は2周目・誤答再実施・セキュリティ・予備を入れる。早く終わったら予備で打ち切ってよい。
+</div>
+</section>
+
+<section id="review">
+<h2>2. 多角的見直し（要約）</h2>
+<div class="grid">
+<div class="card success"><strong>実施可能性</strong><br>手術前約60h・手術後模試週約55h・その後空白。1日1模試・テキスト飛ばし可で現実的。</div>
+<div class="card success"><strong>科目A</strong><br>以前700点超・暗記得意・1〜2周で600点安定は見込める。</div>
+<div class="card warning"><strong>科目B</strong><br>以前500点台・再帰/クラス/読解が弱点。PL11＋本番形式4＋公式2で量は足りる。鍵は誤答の再トレース。</div>
+<div class="card important"><strong>合格の条件</strong><br>ページ消化ではなく「初見で追える」。模試後の誤答再実施を省略しない。</div>
+</div>
+</section>
+
+<section id="strategy">
+<h2>3. 戦略</h2>
+<div class="grid">
+<div class="card important">目的：2026/11/2合格。科目Aは600点安定、科目B重点（約35:65）。</div>
+<div class="card">推奨総時間150〜170h。中身の合計は約130〜145h＋空白バッファ。</div>
+<div class="card warning">10/7〜14は勉強しない。10/26〜11/1は予定なし（遅れ吸収・任意復習）。</div>
+<div class="card">2周目は全ページ必須ではない。1周で印を付けた箇所と頻出分野を優先。</div>
+</div>
+</section>
+
+<section id="daily">
+<h2>4. 日別スケジュール（枠＝内訳合計）</h2>
+<p>黄＝PL科目B／紫＝模試／赤＝手術／灰＝予定なし</p>
+<div class="filter-btns">
+<button onclick="filterTable('all')" class="active">全て</button>
+<button onclick="filterTable('surgery')">手術</button>
+<button onclick="filterTable('mock')">模試</button>
+<button onclick="filterTable('pl')">PL</button>
+<button onclick="filterTable('blank')">空白</button>
+<button onclick="filterTable('weekend')">土日</button>
+</div>
+<div class="scroll-table">
+<table id="daily-table">
+<thead>
+<tr>
+<th>日付</th><th>曜</th><th>週</th><th>残</th><th>枠h</th>
+<th>科目A</th><th>科目B・その他</th>
+<th>時間内訳（合計＝枠）</th>
+<th>到達目標</th>
+<th>優先</th><th>実績h</th><th>完了</th><th>メモ</th>
+</tr>
+</thead>
+<tbody>
+<!-- Week1: TAC + 出る -->
+<tr>
+<td>9/21</td><td>月</td><td>1</td><td>42</td><td>3.0</td>
+<td>TAC p.1〜70（1.0h）</td>
+<td>出るとこだけ p.1〜50（2.0h）</td>
+<td class="tb">A60分＋B120分＝180分</td>
+<td>用語想起・擬似言語に慣れる</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d0921_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d0921_done"></td>
+<td><input type="text" data-key="d0921_memo" style="width:70px"></td>
+</tr>
+<tr>
+<td>9/22</td><td>火</td><td>1</td><td>41</td><td>3.0</td>
+<td>TAC p.71〜130（1.0h）</td>
+<td>出るとこだけ p.51〜110（2.0h）</td>
+<td class="tb">A60＋B120＝180</td>
+<td>配列・制御のトレース</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d0922_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d0922_done"></td>
+<td><input type="text" data-key="d0922_memo" style="width:70px"></td>
+</tr>
+<tr>
+<td>9/23</td><td>水</td><td>1</td><td>40</td><td>3.0</td>
+<td>TAC p.131〜190（1.0h）</td>
+<td>出るとこだけ p.111〜170（2.0h）</td>
+<td class="tb">A60＋B120＝180</td>
+<td>関数の動きを追える</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d0923_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d0923_done"></td>
+<td><input type="text" data-key="d0923_memo" style="width:70px"></td>
+</tr>
+<tr>
+<td>9/24</td><td>木</td><td>1</td><td>39</td><td>3.0</td>
+<td>TAC p.191〜250（1.0h）</td>
+<td>出るとこだけ p.171〜230（2.0h）</td>
+<td class="tb">A60＋B120＝180</td>
+<td>データ構造の基本</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d0924_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d0924_done"></td>
+<td><input type="text" data-key="d0924_memo" style="width:70px"></td>
+</tr>
+<tr>
+<td>9/25</td><td>金</td><td>1</td><td>38</td><td>3.0</td>
+<td>TAC p.251〜310（1.0h）</td>
+<td>出るとこだけ p.231〜290（2.0h）</td>
+<td class="tb">A60＋B120＝180</td>
+<td>ソート・探索のトレース</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d0925_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d0925_done"></td>
+<td><input type="text" data-key="d0925_memo" style="width:70px"></td>
+</tr>
+<tr class="weekend">
+<td>9/26</td><td>土</td><td>1</td><td>37</td><td>6.0</td>
+<td>TAC p.311〜450（2.0h）</td>
+<td>出るとこだけ p.291〜329完了（2.0h）＋出るとこ2周目（印付き箇所）1.5h＋予備0.5h</td>
+<td class="tb">A120＋B120＋2周90＋予備30＝360</td>
+<td>出るとこだけ1周完了</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d0926_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d0926_done"></td>
+<td><input type="text" data-key="d0926_memo" style="width:70px"></td>
+</tr>
+<tr class="weekend">
+<td>9/27</td><td>日</td><td>1</td><td>36</td><td>6.0</td>
+<td>TAC p.451〜587完了（2.0h）</td>
+<td>アルゴリズム p.1〜90（3.5h）＋予備0.5h</td>
+<td class="tb">A120＋B210＋予備30＝360</td>
+<td>TAC1周完了・アルゴ着手</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d0927_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d0927_done"></td>
+<td><input type="text" data-key="d0927_memo" style="width:70px"></td>
+</tr>
+
+<!-- Week2 -->
+<tr>
+<td>9/28</td><td>月</td><td>2</td><td>35</td><td>3.0</td>
+<td>いちばんやさしい p.1〜55（1.0h）</td>
+<td>アルゴリズム p.91〜140（2.0h）</td>
+<td class="tb">A60＋B120＝180</td>
+<td>初見問題を読む</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d0928_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d0928_done"></td>
+<td><input type="text" data-key="d0928_memo" style="width:70px"></td>
+</tr>
+<tr>
+<td>9/29</td><td>火</td><td>2</td><td>34</td><td>3.0</td>
+<td>いちばんやさしい p.56〜110（1.0h）</td>
+<td>アルゴリズム p.141〜190（2.0h）</td>
+<td class="tb">A60＋B120＝180</td>
+<td>表を使ったトレース</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d0929_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d0929_done"></td>
+<td><input type="text" data-key="d0929_memo" style="width:70px"></td>
+</tr>
+<tr class="pl-day">
+<td>9/30</td><td>水</td><td>2</td><td>33</td><td>3.0</td>
+<td>TAC2周目（印付き）0.5h</td>
+<td>PL科目B（1）2.5h</td>
+<td class="tb">PL150＋A2周30＝180</td>
+<td>PL（1）実施</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d0930_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d0930_done"></td>
+<td><input type="text" data-key="d0930_memo" style="width:70px"></td>
+</tr>
+<tr class="pl-day">
+<td>10/1</td><td>木</td><td>2</td><td>32</td><td>3.0</td>
+<td>TAC2周目 0.5h</td>
+<td>PL科目B（2）2.5h</td>
+<td class="tb">PL150＋A30＝180</td>
+<td>PL（2）実施</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1001_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1001_done"></td>
+<td><input type="text" data-key="d1001_memo" style="width:70px"></td>
+</tr>
+<tr class="pl-day">
+<td>10/2</td><td>金</td><td>2</td><td>31</td><td>3.0</td>
+<td>いちばんやさしい p.111〜140（0.5h）</td>
+<td>PL科目B（3）2.5h</td>
+<td class="tb">PL150＋A30＝180</td>
+<td>PL（3）実施</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1002_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1002_done"></td>
+<td><input type="text" data-key="d1002_memo" style="width:70px"></td>
+</tr>
+<tr class="weekend pl-day">
+<td>10/3</td><td>土</td><td>2</td><td>30</td><td>6.0</td>
+<td>いちばんやさしい p.141〜260（2.0h）</td>
+<td>PL科目B（4）2.5h ＋ アルゴリズム p.191〜300完了（1.5h）</td>
+<td class="tb">A120＋PL150＋アルゴ90＝360</td>
+<td>アルゴ1周・PL（4）</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1003_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1003_done"></td>
+<td><input type="text" data-key="d1003_memo" style="width:70px"></td>
+</tr>
+<tr class="weekend pl-day">
+<td>10/4</td><td>日</td><td>2</td><td>29</td><td>6.0</td>
+<td>いちばんやさしい p.261〜380（2.0h）</td>
+<td>PL科目B（5）2.5h ＋ 再帰・クラス（アルゴから選んで再実施）1.5h</td>
+<td class="tb">A120＋PL150＋再帰90＝360</td>
+<td>PL（1）〜（5）完了</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1004_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1004_done"></td>
+<td><input type="text" data-key="d1004_memo" style="width:70px"></td>
+</tr>
+<tr class="pl-day">
+<td>10/5</td><td>月</td><td>3</td><td>28</td><td>3.0</td>
+<td>いちばんやさしい p.381〜410（0.5h）</td>
+<td>PL科目B（6）2.5h</td>
+<td class="tb">PL150＋A30＝180</td>
+<td>PL（6）</td>
+<td class="priority-mid">中</td>
+<td><input type="number" min="0" step="0.5" data-key="d1005_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1005_done"></td>
+<td><input type="text" data-key="d1005_memo" style="width:70px"></td>
+</tr>
+<tr class="pl-day">
+<td>10/6</td><td>火</td><td>3</td><td>27</td><td>3.0</td>
+<td>いちばんやさしい 未読を優先（飛ばし可）0.5h</td>
+<td>PL科目B（7）2.5h</td>
+<td class="tb">PL150＋A30＝180</td>
+<td>PL（1）〜（7）完了</td>
+<td class="priority-mid">中</td>
+<td><input type="number" min="0" step="0.5" data-key="d1006_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1006_done"></td>
+<td><input type="text" data-key="d1006_memo" style="width:70px"></td>
+</tr>
+
+<tr class="surgery-row"><td>10/7</td><td>水</td><td>3</td><td>26</td><td>0</td><td colspan="2">手術のため勉強しない</td><td>—</td><td>—</td><td>—</td><td>0</td><td><input type="checkbox" class="checkbox" data-key="d1007_done"></td><td><input type="text" data-key="d1007_memo" style="width:70px"></td></tr>
+<tr class="surgery-row"><td>10/8</td><td>木</td><td>3</td><td>25</td><td>0</td><td colspan="2">手術のため勉強しない</td><td>—</td><td>—</td><td>—</td><td>0</td><td><input type="checkbox" class="checkbox" data-key="d1008_done"></td><td><input type="text" data-key="d1008_memo" style="width:70px"></td></tr>
+<tr class="surgery-row"><td>10/9</td><td>金</td><td>3</td><td>24</td><td>0</td><td colspan="2">手術のため勉強しない</td><td>—</td><td>—</td><td>—</td><td>0</td><td><input type="checkbox" class="checkbox" data-key="d1009_done"></td><td><input type="text" data-key="d1009_memo" style="width:70px"></td></tr>
+<tr class="surgery-row"><td>10/10</td><td>土</td><td>3</td><td>23</td><td>0</td><td colspan="2">手術のため勉強しない</td><td>—</td><td>—</td><td>—</td><td>0</td><td><input type="checkbox" class="checkbox" data-key="d1010_done"></td><td><input type="text" data-key="d1010_memo" style="width:70px"></td></tr>
+<tr class="surgery-row"><td>10/11</td><td>日</td><td>3</td><td>22</td><td>0</td><td colspan="2">手術のため勉強しない</td><td>—</td><td>—</td><td>—</td><td>0</td><td><input type="checkbox" class="checkbox" data-key="d1011_done"></td><td><input type="text" data-key="d1011_memo" style="width:70px"></td></tr>
+<tr class="surgery-row"><td>10/12</td><td>月</td><td>3</td><td>21</td><td>0</td><td colspan="2">手術のため勉強しない</td><td>—</td><td>—</td><td>—</td><td>0</td><td><input type="checkbox" class="checkbox" data-key="d1012_done"></td><td><input type="text" data-key="d1012_memo" style="width:70px"></td></tr>
+<tr class="surgery-row"><td>10/13</td><td>火</td><td>3</td><td>20</td><td>0</td><td colspan="2">手術のため勉強しない</td><td>—</td><td>—</td><td>—</td><td>0</td><td><input type="checkbox" class="checkbox" data-key="d1013_done"></td><td><input type="text" data-key="d1013_memo" style="width:70px"></td></tr>
+<tr class="surgery-row"><td>10/14</td><td>水</td><td>3</td><td>19</td><td>0</td><td colspan="2">手術のため勉強しない</td><td>—</td><td>—</td><td>—</td><td>0</td><td><input type="checkbox" class="checkbox" data-key="d1014_done"></td><td><input type="text" data-key="d1014_memo" style="width:70px"></td></tr>
+
+<!-- Post surgery PL 8-11 -->
+<tr class="pl-day">
+<td>10/15</td><td>木</td><td>4</td><td>18</td><td>5.0</td>
+<td>TAC2周目（ネットワーク・セキュリティ）0.5h</td>
+<td>PL科目B（8）2.5h ＋ 出るとこ2周（弱点章）1.5h ＋ 予備0.5h</td>
+<td class="tb">PL150＋出る2周90＋A30＋予備30＝300</td>
+<td>PL（8）・再開</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1015_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1015_done"></td>
+<td><input type="text" data-key="d1015_memo" style="width:70px"></td>
+</tr>
+<tr class="pl-day">
+<td>10/16</td><td>金</td><td>4</td><td>17</td><td>5.5</td>
+<td>いちばんやさしい2周目（印付き）0.5h</td>
+<td>PL科目B（9）2.5h ＋ 再帰・クラス再実施 2.0h ＋ 予備0.5h</td>
+<td class="tb">PL150＋再帰120＋A30＋予備30＝330</td>
+<td>PL（9）</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1016_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1016_done"></td>
+<td><input type="text" data-key="d1016_memo" style="width:70px"></td>
+</tr>
+<tr class="weekend pl-day">
+<td>10/17</td><td>土</td><td>4</td><td>16</td><td>6.0</td>
+<td>TAC2周目 1.5h</td>
+<td>PL科目B（10）2.5h ＋ PL(1)〜(9)の誤答から5問再実施 2.0h</td>
+<td class="tb">PL150＋誤答120＋A90＝360</td>
+<td>PL（10）・誤答消化</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1017_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1017_done"></td>
+<td><input type="text" data-key="d1017_memo" style="width:70px"></td>
+</tr>
+<tr class="weekend pl-day">
+<td>10/18</td><td>日</td><td>4</td><td>15</td><td>6.0</td>
+<td>—</td>
+<td>PL科目B（11）2.5h ＋ セキュリティ特化36問 3.0h ＋ 予備0.5h</td>
+<td class="tb">PL150＋セキュ180＋予備30＝360</td>
+<td>PL（1）〜（11）完了・セキュ完了</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1018_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1018_done"></td>
+<td><input type="text" data-key="d1018_memo" style="width:70px"></td>
+</tr>
+
+<!-- PL12-15 sequential from 10/19 -->
+<tr class="mock-row">
+<td>10/19</td><td>月</td><td>5</td><td>14</td><td>5.5</td>
+<td>PL（12）科目A 60分</td>
+<td>PL（12）科目B 100分 ＋ 分析60分 ＋ 当日B誤答の再トレース 1.3h ＋ 予備0.5h</td>
+<td class="tb">A60＋B100＋分析60＋誤答80＋予備30＝330</td>
+<td>PL（12）実施</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1019_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1019_done"></td>
+<td><input type="text" data-key="d1019_memo" style="width:70px"></td>
+</tr>
+<tr class="mock-row">
+<td>10/20</td><td>火</td><td>5</td><td>13</td><td>5.5</td>
+<td>PL（13）科目A 60分</td>
+<td>PL（13）科目B 100分 ＋ 分析60分 ＋ 当日B誤答再トレース 1.3h ＋ 予備0.5h</td>
+<td class="tb">220＋誤答80＋予備30＝330</td>
+<td>PL（13）実施</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1020_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1020_done"></td>
+<td><input type="text" data-key="d1020_memo" style="width:70px"></td>
+</tr>
+<tr class="mock-row">
+<td>10/21</td><td>水</td><td>5</td><td>12</td><td>5.5</td>
+<td>PL（14）科目A 60分</td>
+<td>PL（14）科目B 100分 ＋ 分析60分 ＋ 当日B誤答再トレース 1.3h ＋ 予備0.5h</td>
+<td class="tb">220＋誤答80＋予備30＝330</td>
+<td>PL（14）実施</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1021_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1021_done"></td>
+<td><input type="text" data-key="d1021_memo" style="width:70px"></td>
+</tr>
+<tr class="mock-row">
+<td>10/22</td><td>木</td><td>5</td><td>11</td><td>5.5</td>
+<td>PL（15）科目A 60分</td>
+<td>PL（15）科目B 100分 ＋ 分析60分 ＋ 当日B誤答再トレース 1.3h ＋ 予備0.5h</td>
+<td class="tb">220＋誤答80＋予備30＝330</td>
+<td>PL（15）実施</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1022_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1022_done"></td>
+<td><input type="text" data-key="d1022_memo" style="width:70px"></td>
+</tr>
+<tr class="mock-row">
+<td>10/23</td><td>金</td><td>5</td><td>10</td><td>5.5</td>
+<td>テキスト2周目（頻出・印付き）1.5h</td>
+<td>TAC模試科目B 2.5h ＋ 誤答再実施 1.5h</td>
+<td class="tb">TAC150＋誤答90＋A2周90＝330</td>
+<td>TAC模試科目B実施</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1023_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1023_done"></td>
+<td><input type="text" data-key="d1023_memo" style="width:70px"></td>
+</tr>
+<tr class="mock-row weekend">
+<td>10/24</td><td>土</td><td>5</td><td>9</td><td>6.0</td>
+<td>IPA2024 科目A30分 ＋ 模試後のA誤答対応 1.0h ＋ テキスト2周 1.0h</td>
+<td>IPA2024 科目B40分 ＋ 分析60分 ＋ B誤答再トレース 1.5h ＋ 予備0.3h</td>
+<td class="tb">模試70＋分析60＋B誤答90＋A誤答60＋2周60＋予備20≒360</td>
+<td>IPA2024実施</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1024_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1024_done"></td>
+<td><input type="text" data-key="d1024_memo" style="width:70px"></td>
+</tr>
+<tr class="mock-row weekend">
+<td>10/25</td><td>日</td><td>5</td><td>8</td><td>6.0</td>
+<td>IPA2026 科目A30分 ＋ A誤答対応 1.0h ＋ テキスト2周 1.0h</td>
+<td>IPA2026 科目B40分 ＋ 分析60分 ＋ B誤答再トレース 1.5h ＋ 予備0.3h</td>
+<td class="tb">模試70＋分析60＋B90＋A60＋2周60＋予備20≒360</td>
+<td>IPA2026実施・模試一巡完了</td>
+<td class="priority-high">高</td>
+<td><input type="number" min="0" step="0.5" data-key="d1025_h"></td>
+<td><input type="checkbox" class="checkbox" data-key="d1025_done"></td>
+<td><input type="text" data-key="d1025_memo" style="width:70px"></td>
+</tr>
+
+<tr class="blank-row"><td>10/26</td><td>月</td><td>6</td><td>7</td><td>—</td><td colspan="2">予定なし</td><td>—</td><td>遅れ吸収・任意</td><td>—</td><td><input type="number" min="0" step="0.5" data-key="d1026_h"></td><td><input type="checkbox" class="checkbox" data-key="d1026_done"></td><td><input type="text" data-key="d1026_memo" style="width:70px"></td></tr>
+<tr class="blank-row"><td>10/27</td><td>火</td><td>6</td><td>6</td><td>—</td><td colspan="2">予定なし</td><td>—</td><td>—</td><td>—</td><td><input type="number" min="0" step="0.5" data-key="d1027_h"></td><td><input type="checkbox" class="checkbox" data-key="d1027_done"></td><td><input type="text" data-key="d1027_memo" style="width:70px"></td></tr>
+<tr class="blank-row"><td>10/28</td><td>水</td><td>6</td><td>5</td><td>—</td><td colspan="2">予定なし</td><td>—</td><td>—</td><td>—</td><td><input type="number" min="0" step="0.5" data-key="d1028_h"></td><td><input type="checkbox" class="checkbox" data-key="d1028_done"></td><td><input type="text" data-key="d1028_memo" style="width:70px"></td></tr>
+<tr class="blank-row"><td>10/29</td><td>木</td><td>6</td><td>4</td><td>—</td><td colspan="2">予定なし</td><td>—</td><td>—</td><td>—</td><td><input type="number" min="0" step="0.5" data-key="d1029_h"></td><td><input type="checkbox" class="checkbox" data-key="d1029_done"></td><td><input type="text" data-key="d1029_memo" style="width:70px"></td></tr>
+<tr class="blank-row"><td>10/30</td><td>金</td><td>6</td><td>3</td><td>—</td><td colspan="2">予定なし</td><td>—</td><td>—</td><td>—</td><td><input type="number" min="0" step="0.5" data-key="d1030_h"></td><td><input type="checkbox" class="checkbox" data-key="d1030_done"></td><td><input type="text" data-key="d1030_memo" style="width:70px"></td></tr>
+<tr class="blank-row weekend"><td>10/31</td><td>土</td><td>6</td><td>2</td><td>—</td><td colspan="2">予定なし</td><td>—</td><td>—</td><td>—</td><td><input type="number" min="0" step="0.5" data-key="d1031_h"></td><td><input type="checkbox" class="checkbox" data-key="d1031_done"></td><td><input type="text" data-key="d1031_memo" style="width:70px"></td></tr>
+<tr class="blank-row weekend"><td>11/1</td><td>日</td><td>6</td><td>1</td><td>—</td><td colspan="2">予定なし（夜は勉強しない）</td><td>—</td><td>体調優先</td><td>—</td><td><input type="number" min="0" step="0.5" data-key="d1101_h"></td><td><input type="checkbox" class="checkbox" data-key="d1101_done"></td><td><input type="text" data-key="d1101_memo" style="width:70px"></td></tr>
+</tbody>
+</table>
+</div>
+<div class="note">
+各行の「時間内訳」の合計が「枠h」と一致するよう設計しています。早く終わった場合は予備で終了してかまいません。<br>
+10/26〜11/1は空白です。未了の模試や誤答の消化に使ってください。
+</div>
+</section>
+
+<section id="mock">
+<h2>5. 模試・実力管理</h2>
+<h3>5-1. PL科目B（1）〜（11）各2.5h</h3>
+<div class="scroll-table"><table>
+<thead><tr><th>番号</th><th>予定日</th><th>正答/20</th><th>所要分</th><th>分析メモ</th><th>次への反映</th><th>完了</th></tr></thead>
+<tbody>
+<tr><td>(1)</td><td>9/30</td><td><input type="text" data-key="pl1_score" style="width:40px"></td><td><input type="text" data-key="pl1_time" style="width:40px"></td><td><input type="text" data-key="pl1_memo" style="width:130px"></td><td><input type="text" data-key="pl1_next" style="width:130px"></td><td><input type="checkbox" class="checkbox" data-key="pl1_done"></td></tr>
+<tr><td>(2)</td><td>10/1</td><td><input type="text" data-key="pl2_score" style="width:40px"></td><td><input type="text" data-key="pl2_time" style="width:40px"></td><td><input type="text" data-key="pl2_memo" style="width:130px"></td><td><input type="text" data-key="pl2_next" style="width:130px"></td><td><input type="checkbox" class="checkbox" data-key="pl2_done"></td></tr>
+<tr><td>(3)</td><td>10/2</td><td><input type="text" data-key="pl3_score" style="width:40px"></td><td><input type="text" data-key="pl3_time" style="width:40px"></td><td><input type="text" data-key="pl3_memo" style="width:130px"></td><td><input type="text" data-key="pl3_next" style="width:130px"></td><td><input type="checkbox" class="checkbox" data-key="pl3_done"></td></tr>
+<tr><td>(4)</td><td>10/3</td><td><input type="text" data-key="pl4_score" style="width:40px"></td><td><input type="text" data-key="pl4_time" style="width:40px"></td><td><input type="text" data-key="pl4_memo" style="width:130px"></td><td><input type="text" data-key="pl4_next" style="width:130px"></td><td><input type="checkbox" class="checkbox" data-key="pl4_done"></td></tr>
+<tr><td>(5)</td><td>10/4</td><td><input type="text" data-key="pl5_score" style="width:40px"></td><td><input type="text" data-key="pl5_time" style="width:40px"></td><td><input type="text" data-key="pl5_memo" style="width:130px"></td><td><input type="text" data-key="pl5_next" style="width:130px"></td><td><input type="checkbox" class="checkbox" data-key="pl5_done"></td></tr>
+<tr><td>(6)</td><td>10/5</td><td><input type="text" data-key="pl6_score" style="width:40px"></td><td><input type="text" data-key="pl6_time" style="width:40px"></td><td><input type="text" data-key="pl6_memo" style="width:130px"></td><td><input type="text" data-key="pl6_next" style="width:130px"></td><td><input type="checkbox" class="checkbox" data-key="pl6_done"></td></tr>
+<tr><td>(7)</td><td>10/6</td><td><input type="text" data-key="pl7_score" style="width:40px"></td><td><input type="text" data-key="pl7_time" style="width:40px"></td><td><input type="text" data-key="pl7_memo" style="width:130px"></td><td><input type="text" data-key="pl7_next" style="width:130px"></td><td><input type="checkbox" class="checkbox" data-key="pl7_done"></td></tr>
+<tr><td>(8)</td><td>10/15</td><td><input type="text" data-key="pl8_score" style="width:40px"></td><td><input type="text" data-key="pl8_time" style="width:40px"></td><td><input type="text" data-key="pl8_memo" style="width:130px"></td><td><input type="text" data-key="pl8_next" style="width:130px"></td><td><input type="checkbox" class="checkbox" data-key="pl8_done"></td></tr>
+<tr><td>(9)</td><td>10/16</td><td><input type="text" data-key="pl9_score" style="width:40px"></td><td><input type="text" data-key="pl9_time" style="width:40px"></td><td><input type="text" data-key="pl9_memo" style="width:130px"></td><td><input type="text" data-key="pl9_next" style="width:130px"></td><td><input type="checkbox" class="checkbox" data-key="pl9_done"></td></tr>
+<tr><td>(10)</td><td>10/17</td><td><input type="text" data-key="pl10_score" style="width:40px"></td><td><input type="text" data-key="pl10_time" style="width:40px"></td><td><input type="text" data-key="pl10_memo" style="width:130px"></td><td><input type="text" data-key="pl10_next" style="width:130px"></td><td><input type="checkbox" class="checkbox" data-key="pl10_done"></td></tr>
+<tr><td>(11)</td><td>10/18</td><td><input type="text" data-key="pl11_score" style="width:40px"></td><td><input type="text" data-key="pl11_time" style="width:40px"></td><td><input type="text" data-key="pl11_memo" style="width:130px"></td><td><input type="text" data-key="pl11_next" style="width:130px"></td><td><input type="checkbox" class="checkbox" data-key="pl11_done"></td></tr>
+</tbody></table></div>
+
+<h3>5-2. PL（12）〜（15）・TAC・IPA</h3>
+<div class="scroll-table"><table>
+<thead><tr><th>模試</th><th>予定日</th><th>所要</th><th>A正答</th><th>A分</th><th>B正答</th><th>B分</th><th>分析メモ</th><th>次への反映</th><th>完了</th></tr></thead>
+<tbody>
+<tr class="mock-row"><td>PL（12）A60+B100</td><td>10/19</td><td>3.7h+誤答</td><td><input type="text" data-key="pl12_a" style="width:40px"></td><td><input type="text" data-key="pl12_at" style="width:40px"></td><td><input type="text" data-key="pl12_b" style="width:40px"></td><td><input type="text" data-key="pl12_bt" style="width:40px"></td><td><input type="text" data-key="pl12_memo" style="width:100px"></td><td><input type="text" data-key="pl12_next" style="width:100px"></td><td><input type="checkbox" class="checkbox" data-key="pl12_done"></td></tr>
+<tr class="mock-row"><td>PL（13）</td><td>10/20</td><td>3.7h+誤答</td><td><input type="text" data-key="pl13_a" style="width:40px"></td><td><input type="text" data-key="pl13_at" style="width:40px"></td><td><input type="text" data-key="pl13_b" style="width:40px"></td><td><input type="text" data-key="pl13_bt" style="width:40px"></td><td><input type="text" data-key="pl13_memo" style="width:100px"></td><td><input type="text" data-key="pl13_next" style="width:100px"></td><td><input type="checkbox" class="checkbox" data-key="pl13_done"></td></tr>
+<tr class="mock-row"><td>PL（14）</td><td>10/21</td><td>3.7h+誤答</td><td><input type="text" data-key="pl14_a" style="width:40px"></td><td><input type="text" data-key="pl14_at" style="width:40px"></td><td><input type="text" data-key="pl14_b" style="width:40px"></td><td><input type="text" data-key="pl14_bt" style="width:40px"></td><td><input type="text" data-key="pl14_memo" style="width:100px"></td><td><input type="text" data-key="pl14_next" style="width:100px"></td><td><input type="checkbox" class="checkbox" data-key="pl14_done"></td></tr>
+<tr class="mock-row"><td>PL（15）</td><td>10/22</td><td>3.7h+誤答</td><td><input type="text" data-key="pl15_a" style="width:40px"></td><td><input type="text" data-key="pl15_at" style="width:40px"></td><td><input type="text" data-key="pl15_b" style="width:40px"></td><td><input type="text" data-key="pl15_bt" style="width:40px"></td><td><input type="text" data-key="pl15_memo" style="width:100px"></td><td><input type="text" data-key="pl15_next" style="width:100px"></td><td><input type="checkbox" class="checkbox" data-key="pl15_done"></td></tr>
+<tr class="mock-row"><td>TAC模試科目B</td><td>10/23</td><td>2.5h+誤答</td><td>—</td><td>—</td><td><input type="text" data-key="tac_b" style="width:40px"></td><td><input type="text" data-key="tac_bt" style="width:40px"></td><td><input type="text" data-key="tac_memo" style="width:100px"></td><td><input type="text" data-key="tac_next" style="width:100px"></td><td><input type="checkbox" class="checkbox" data-key="tac_done"></td></tr>
+<tr class="mock-row"><td>IPA 2024</td><td>10/24</td><td>2.2h+誤答</td><td><input type="text" data-key="ipa24_a" style="width:40px"></td><td><input type="text" data-key="ipa24_at" style="width:40px"></td><td><input type="text" data-key="ipa24_b" style="width:40px"></td><td><input type="text" data-key="ipa24_bt" style="width:40px"></td><td><input type="text" data-key="ipa24_memo" style="width:100px"></td><td><input type="text" data-key="ipa24_next" style="width:100px"></td><td><input type="checkbox" class="checkbox" data-key="ipa24_done"></td></tr>
+<tr class="mock-row"><td>IPA 2026</td><td>10/25</td><td>2.2h+誤答</td><td><input type="text" data-key="ipa26_a" style="width:40px"></td><td><input type="text" data-key="ipa26_at" style="width:40px"></td><td><input type="text" data-key="ipa26_b" style="width:40px"></td><td><input type="text" data-key="ipa26_bt" style="width:40px"></td><td><input type="text" data-key="ipa26_memo" style="width:100px"></td><td><input type="text" data-key="ipa26_next" style="width:100px"></td><td><input type="checkbox" class="checkbox" data-key="ipa26_done"></td></tr>
+</tbody></table></div>
+</section>
+
+<section id="materials">
+<h2>6. 教材進捗（総時間つき）</h2>
+<div class="scroll-table"><table>
+<thead><tr><th>教材</th><th>科目</th><th>優先</th><th>総時間目安</th><th>開始</th><th>終了</th><th>総量</th><th>予定</th><th>実績</th><th>状態</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td>TAC</td><td>A</td><td class="priority-high">高</td><td>1周約15h＋2周約5h</td><td>9/21</td><td>2周は随時</td><td>587p</td><td>1周＋印付き2周</td><td><input type="text" data-key="mat_tac" style="width:70px"></td><td><select data-key="mat_tac_st"><option>未着手</option><option>進行中</option><option>完了</option></select></td><td>飛ばし可</td></tr>
+<tr><td>いちばんやさしい</td><td>A</td><td class="priority-high">高</td><td>1周約18h＋2周約4h</td><td>9/28</td><td>2周は随時</td><td>727p</td><td>1周＋印付き2周</td><td><input type="text" data-key="mat_ichi" style="width:70px"></td><td><select data-key="mat_ichi_st"><option>未着手</option><option>進行中</option><option>完了</option></select></td><td>飛ばし可</td></tr>
+<tr><td>出るとこだけ</td><td>B</td><td class="priority-high">高</td><td>1周約13h＋2周約2h</td><td>9/21</td><td>10/15頃2周</td><td>329p</td><td>1周＋弱点2周</td><td><input type="text" data-key="mat_deru" style="width:70px"></td><td><select data-key="mat_deru_st"><option>未着手</option><option>進行中</option><option>完了</option></select></td><td></td></tr>
+<tr><td>アルゴリズム×模擬言語</td><td>B</td><td class="priority-high">高</td><td>約20h</td><td>9/27</td><td>10/4</td><td>300p</td><td>1周＋再帰クラス反復</td><td><input type="text" data-key="mat_algo" style="width:70px"></td><td><select data-key="mat_algo_st"><option>未着手</option><option>進行中</option><option>完了</option></select></td><td></td></tr>
+<tr><td>超効率の教科書</td><td>B</td><td class="priority-mid">低</td><td>0〜3h</td><td>必要時</td><td>—</td><td>300p</td><td>通読しない</td><td><input type="text" data-key="mat_cho" style="width:70px"></td><td><select data-key="mat_cho_st"><option>必要時のみ</option></select></td><td></td></tr>
+<tr><td>PL科目B（1）〜（11）</td><td>B</td><td class="priority-high">高</td><td>約27.5h</td><td>9/30</td><td>10/18</td><td>11×2.5h</td><td>11セット</td><td><input type="text" data-key="mat_plb" style="width:70px"></td><td><select data-key="mat_plb_st"><option>未着手</option><option>進行中</option><option>完了</option></select></td><td></td></tr>
+<tr><td>PL（12）〜（15）</td><td>A+B</td><td class="priority-high">高</td><td>約14.8h＋誤答約5h</td><td>10/19</td><td>10/22</td><td>4×3.7h</td><td>4セット</td><td><input type="text" data-key="mat_plfull" style="width:70px"></td><td><select data-key="mat_plfull_st"><option>未着手</option><option>進行中</option><option>完了</option></select></td><td>A60+B100</td></tr>
+<tr><td>TAC模試科目B</td><td>B</td><td class="priority-high">高</td><td>約2.5h＋誤答1.5h</td><td>10/23</td><td>10/23</td><td>1回</td><td>—</td><td><input type="text" data-key="mat_tac" style="width:70px"></td><td><select data-key="mat_tac_st"><option>未着手</option><option>完了</option></select></td><td></td></tr>
+<tr><td>IPA×2</td><td>A+B</td><td class="priority-high">高</td><td>約4.4h＋誤答約4h</td><td>10/24</td><td>10/25</td><td>2回</td><td>—</td><td><input type="text" data-key="mat_ipa" style="width:70px"></td><td><select data-key="mat_ipa_st"><option>未着手</option><option>完了</option></select></td><td></td></tr>
+<tr><td>セキュリティ特化</td><td>B</td><td class="priority-mid">中</td><td>約3h</td><td>10/18</td><td>10/18</td><td>36問</td><td>—</td><td><input type="text" data-key="mat_sec" style="width:70px"></td><td><select data-key="mat_sec_st"><option>未着手</option><option>完了</option></select></td><td></td></tr>
+</tbody></table></div>
+</section>
+
+<section id="recovery">
+<h2>7. リカバリー</h2>
+<div class="phase"><div class="phase-title">予定どおり</div>日別表どおり。空白は使わなくてよい。</div>
+<div class="phase"><div class="phase-title">1週間程度遅れ</div>削ってよい：超効率、テキスト2周の細部、セキュリティ一部。<br>残す：出るとこ、アルゴ主要、PL（1）〜（11）の主要、PL（12）〜（15）、TAC、IPA。</div>
+<div class="phase"><div class="phase-title">かなり遅れ</div>科目Aは模試中心。科目B優先。空白日（10/26〜）に未了模試を回す。</div>
+</section>
+
+<section id="checkpoints">
+<h2>8. 中間目標</h2>
+<table>
+<thead><tr><th>時点</th><th>科目A</th><th>科目B</th><th>判断</th></tr></thead>
+<tbody>
+<tr><td>9月末</td><td>TAC1周ほぼ完了</td><td>出るとこ完了・PL開始</td><td>思い出せるか</td></tr>
+<tr><td>10/6</td><td>いちばん主要完了</td><td>アルゴ1周・PL（1）〜（7）</td><td>手術前に基礎完了か</td></tr>
+<tr><td>10/18</td><td>2周進行中</td><td>PL（1）〜（11）・セキュ完了</td><td>セット演習を終えたか</td></tr>
+<tr><td>10/25</td><td>模試で傾向把握</td><td>PL（12）〜（15）・TAC・IPA完了</td><td>本番形式を経験したか</td></tr>
+<tr><td>10/31</td><td colspan="2">空白で必要な補強のみ</td><td>600点以上が見込めるか</td></tr>
+</tbody></table>
+</section>
+
+</div>
+<div class="save-status" id="saveStatus">保存しました</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAWWMmCu0A0aDP7ocBX6tYtaZy7sEvzAHw",
+    authDomain: "fe-studytracker.firebaseapp.com",
+    databaseURL: "https://fe-studytracker-default-rtdb.firebaseio.com",
+    projectId: "fe-studytracker",
+    storageBucket: "fe-studytracker.firebasestorage.app",
+    messagingSenderId: "796057433997",
+    appId: "1:796057433997:web:65838f21a4b24aad40efc4"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const userId = "user_001";
+const dbRef = ref(db, `users/${userId}/fe_study_plan_v7`);
+
+const STORAGE_KEY='FE_study_plan_2026_v7';
+
+function setSyncStatus(message){
+  const el=document.getElementById('sync-status');
+  if(el) el.textContent=message;
+}
+
+function collectData(){
+  const d={};
+  document.querySelectorAll('[data-key]').forEach(el=>{
+    d[el.dataset.key]=el.type==='checkbox'?el.checked:el.value;
+  });
+  return d;
+}
+
+function applyData(d){
+  document.querySelectorAll('[data-key]').forEach(el=>{
+    if(!(el.dataset.key in d)) return;
+    if(el.type==='checkbox') el.checked=!!d[el.dataset.key];
+    else el.value=d[el.dataset.key];
+  });
+}
+
+async function saveAll(){
+  const d=collectData();
+  try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(d)); }catch(e){}
+  showSaveStatus();
+  try{
+    setSyncStatus('🔄 保存中...');
+    await set(dbRef,d);
+    setSyncStatus('✅ クラウド保存完了');
+  }catch(e){
+    console.error('Firebase保存エラー:',e);
+    setSyncStatus('⚠️ オフライン（次回オンライン時に再送）');
+  }
+}
+
+async function loadAll(){
+  setSyncStatus('🔄 読み込み中...');
+  let cloudData=null;
+  try{
+    const snap=await get(dbRef);
+    if(snap.exists()) cloudData=snap.val();
+  }catch(e){
+    console.error('Firebase読み込みエラー:',e);
+  }
+  if(cloudData){
+    applyData(cloudData);
+    try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(cloudData)); }catch(e){}
+    setSyncStatus('✅ クラウドから復元完了');
+    return;
+  }
+  try{
+    const r=localStorage.getItem(STORAGE_KEY);
+    if(r) applyData(JSON.parse(r));
+    setSyncStatus('⚠️ オフライン（端末内データを表示中）');
+  }catch(e){
+    setSyncStatus('⚠️ 接続エラー');
+  }
+}
+
+function showSaveStatus(){const el=document.getElementById('saveStatus');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1200)}
+function exportJSON(){saveAll();const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([localStorage.getItem(STORAGE_KEY)||'{}'],{type:'application/json'}));a.download='FE_study_backup_'+new Date().toISOString().slice(0,10)+'.json';a.click()}
+async function clearAll(){if(!confirm('入力データをすべて削除しますか？'))return;localStorage.removeItem(STORAGE_KEY);document.querySelectorAll('[data-key]').forEach(el=>{if(el.type==='checkbox')el.checked=false;else if(el.tagName==='SELECT')el.selectedIndex=0;else el.value=''});await saveAll()}
+function filterTable(type){const rows=document.querySelectorAll('#daily-table tbody tr');document.querySelectorAll('.filter-btns button').forEach(b=>b.classList.remove('active'));if(event&&event.target)event.target.classList.add('active');rows.forEach(row=>{if(type==='all')row.style.display='';else if(type==='surgery')row.style.display=row.classList.contains('surgery-row')?'':'none';else if(type==='mock')row.style.display=row.classList.contains('mock-row')?'':'none';else if(type==='pl')row.style.display=row.classList.contains('pl-day')?'':'none';else if(type==='blank')row.style.display=row.classList.contains('blank-row')?'':'none';else if(type==='weekend')row.style.display=row.classList.contains('weekend')?'':'none'})}
+
+window.saveAll=saveAll;
+window.exportJSON=exportJSON;
+window.clearAll=clearAll;
+window.filterTable=filterTable;
+
+document.addEventListener('DOMContentLoaded',async ()=>{
+  await loadAll();
+  document.querySelectorAll('[data-key]').forEach(el=>{
+    el.addEventListener('change',saveAll);
+    el.addEventListener('input',()=>{clearTimeout(window._t);window._t=setTimeout(saveAll,600)});
+  });
+});
+</script>
+</body>
+</html>
